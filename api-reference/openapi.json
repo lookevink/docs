@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "https://v2.easystreetoffers.com"
+      "url": "https://v2.easystreetoffers.com/api/v2"
     }
   ],
   "security": [
@@ -21,7 +21,7 @@
   "paths": {
     "/offer-requests": {
       "post": {
-        "description": "Creates an offer request",
+        "description": "Creates an offer request. For test calls, please set test=true",
         "requestBody": {
           "description": "New offer request",
           "content": {
@@ -39,7 +39,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Plant"
+                  "$ref": "#/components/schemas/offer_requests"
                 }
               }
             }
@@ -101,7 +101,7 @@
         "description": "Get a single plant based on the ID supplied",
         "parameters": [
           {
-            "name": "id",
+            "name": "offer_request_id",
             "in": "path",
             "description": "ID of plant to delete",
             "required": true,
@@ -128,13 +128,13 @@
           }
         }
       },
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
+      "put": {
+        "description": "Updates a single plant based on the ID supplied",
         "parameters": [
           {
-            "name": "id",
+            "name": "offer_request_id",
             "in": "path",
-            "description": "ID of plant to delete",
+            "description": "ID of offer request to delete",
             "required": true,
             "schema": {
               "type": "integer",
@@ -167,10 +167,10 @@
         "type": "object",
         "properties": {
           "request": {
-            "$ref": "#/components/schemas/offer_requests"
+            "$ref": "#/components/schemas/offer_requests_request"
           },
           "property": {
-            "$ref": "#/components/schemas/inventory_properties"
+            "$ref": "#/components/schemas/inventory_properties_request"
           }
         }
       },
@@ -234,7 +234,426 @@
           }
         }
       },
+      "offer_requests_request": {
+        "type": "object",
+        "properties": {
+          "offer_request_asking": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "test": {
+            "type": "boolean",
+            "format": "boolean"
+          }
+        }
+      },
       "inventory_properties": {
+        "type": "object",
+        "properties": {
+          "AssociationFee": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "AssociationFee2": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "AssociationFee2Frequency": {
+            "maxLength": 25,
+            "type": "string",
+            "format": "character varying"
+          },
+          "AssociationFeeFrequency": {
+            "maxLength": 25,
+            "type": "string",
+            "format": "character varying"
+          },
+          "AssociationYN": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "AttachedGarageYN": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "Basement": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "BasementYN": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "BathroomsFull": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "BathroomsHalf": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "BathroomsOneQuarter": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "BathroomsPartial": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "BathroomsThreeQuarter": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "BedroomsTotal": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "CarportSpaces": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "CarportYN": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "City": {
+            "maxLength": 50,
+            "type": "string",
+            "format": "character varying"
+          },
+          "CountyOrParish": {
+            "maxLength": 50,
+            "type": "string",
+            "format": "character varying"
+          },
+          "CoveredSpaces": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "GarageSpaces": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "GarageYN": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "HistoryTransactional": {
+            "maxLength": 255,
+            "type": "string",
+            "format": "character varying"
+          },
+          "Latitude": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "Levels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "ListAgent": {
+            "maxLength": 255,
+            "type": "string",
+            "format": "character varying"
+          },
+          "ListAgentDirectPhone": {
+            "maxLength": 16,
+            "type": "string",
+            "format": "character varying"
+          },
+          "ListAgentEmail": {
+            "maxLength": 80,
+            "type": "string",
+            "format": "character varying"
+          },
+          "ListAgentFullName": {
+            "maxLength": 150,
+            "type": "string",
+            "format": "character varying"
+          },
+          "ListOffice": {
+            "maxLength": 255,
+            "type": "string",
+            "format": "character varying"
+          },
+          "ListOfficeName": {
+            "maxLength": 255,
+            "type": "string",
+            "format": "character varying"
+          },
+          "ListPrice": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "LivingArea": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "LivingAreaSource": {
+            "maxLength": 50,
+            "type": "string",
+            "format": "character varying"
+          },
+          "LivingAreaUnits": {
+            "maxLength": 25,
+            "type": "string",
+            "format": "character varying"
+          },
+          "Longitude": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "LotSizeSquareFeet": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "MlsStatus": {
+            "maxLength": 50,
+            "type": "string",
+            "format": "character varying"
+          },
+          "OccupantType": {
+            "maxLength": 50,
+            "type": "string",
+            "format": "character varying"
+          },
+          "OpenParkingSpaces": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "OpenParkingYN": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "OtherParking": {
+            "maxLength": 1024,
+            "type": "string",
+            "format": "character varying"
+          },
+          "OwnerName": {
+            "maxLength": 50,
+            "type": "string",
+            "format": "character varying"
+          },
+          "ParcelNumber": {
+            "maxLength": 50,
+            "type": "string",
+            "format": "character varying"
+          },
+          "ParkingTotal": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "PoolPrivateYN": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "PostalCity": {
+            "maxLength": 50,
+            "type": "string",
+            "format": "character varying"
+          },
+          "PostalCode": {
+            "maxLength": 10,
+            "type": "string",
+            "format": "character varying"
+          },
+          "PropertySubType": {
+            "maxLength": 50,
+            "type": "string",
+            "format": "character varying"
+          },
+          "PropertyType": {
+            "maxLength": 50,
+            "type": "string",
+            "format": "character varying"
+          },
+          "SeniorCommunityYN": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "Sewer": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "SpaYN": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "StandardStatus": {
+            "maxLength": 25,
+            "type": "string",
+            "format": "character varying"
+          },
+          "StateOrProvince": {
+            "maxLength": 2,
+            "type": "string",
+            "format": "character varying"
+          },
+          "Stories": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "StreetAdditionalInfo": {
+            "maxLength": 50,
+            "type": "string",
+            "format": "character varying"
+          },
+          "StreetDirPrefix": {
+            "maxLength": 15,
+            "type": "string",
+            "format": "character varying"
+          },
+          "StreetDirSuffix": {
+            "maxLength": 15,
+            "type": "string",
+            "format": "character varying"
+          },
+          "StreetName": {
+            "maxLength": 50,
+            "type": "string",
+            "format": "character varying"
+          },
+          "StreetNumber": {
+            "maxLength": 25,
+            "type": "string",
+            "format": "character varying"
+          },
+          "StreetNumberNumeric": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "StreetSuffix": {
+            "maxLength": 25,
+            "type": "string",
+            "format": "character varying"
+          },
+          "StreetSuffixModifier": {
+            "maxLength": 25,
+            "type": "string",
+            "format": "character varying"
+          },
+          "TaxLegalDescription": {
+            "maxLength": 6000,
+            "type": "string",
+            "format": "character varying"
+          },
+          "TaxOtherAnnualAssessmentAmount": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "TaxYear": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "UnitNumber": {
+            "maxLength": 25,
+            "type": "string",
+            "format": "character varying"
+          },
+          "UnparsedAddress": {
+            "type": "string",
+            "format": "text"
+          },
+          "Utilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "WaterSource": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "YearBuilt": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "ConstructionMaterials": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "PowerProductionType": {
+            "type": "string",
+            "format": "text"
+          },
+          "TotalActualRent": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "LeaseExpiration": {
+            "type": "string",
+            "format": "date"
+          },
+          "Notes": {
+            "type": "string",
+            "format": "text"
+          },
+          "inventory_password": {
+            "type": "integer",
+            "format": "integer"
+          },
+          "inventory_hash": {
+            "type": "string",
+            "format": "text"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "TaxAnnualAmount": {
+            "type": "integer",
+            "format": "integer"
+          },
+          "cbsa_title": {
+            "type": "string",
+            "description": "used to identify markets",
+            "format": "text"
+          },
+          "ListAgentFirstName": {
+            "type": "string",
+            "format": "text"
+          },
+          "ListAgentLastName": {
+            "type": "string",
+            "format": "text"
+          },
+          "ListAgentMlsId": {
+            "type": "string",
+            "format": "text"
+          },
+          "ListAgentStateLicense": {
+            "type": "string",
+            "format": "text"
+          },
+          "ListAgentKey": {
+            "type": "string",
+            "format": "text"
+          },
+          "inventory_uid": {
+            "type": "string",
+            "description": "used to uniquely prevent duplicate by merging with agent_id",
+            "format": "text"
+          },
+          "test": {
+            "type": "boolean",
+            "format": "boolean"
+          }
+        }
+      },
+      "inventory_properties_request": {
         "type": "object",
         "properties": {
           "AssociationFee": {

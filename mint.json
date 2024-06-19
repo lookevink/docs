@@ -25,6 +25,9 @@
     "name": "Dashboard",
     "url": "https://v2.easystreetoffers.com/auth/login"
   },
+  "openapi": [
+    "/api-reference/openapi.json"
+  ],
   "tabs": [
     {
       "name": "API Reference",
@@ -70,12 +73,12 @@
       ]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "Cash Offer Requests",
       "pages": [
-        "api-reference/endpoint/create-or",
-        "api-reference/endpoint/list-or",
-        "api-reference/endpoint/get-or",
-        "api-reference/endpoint/delete"
+        "api-reference/endpoint/post-offer-requests",
+        "api-reference/endpoint/get-offer-requests",
+        "api-reference/endpoint/get-offer-requests-1",
+        "api-reference/endpoint/put-offer-requests"
       ]
     }
   ],
