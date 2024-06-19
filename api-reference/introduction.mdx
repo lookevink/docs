@@ -1,33 +1,21 @@
 ---
 title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+description: 'Request and manage your cash offers here.'
 ---
 
 <Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
+  ESO API is currently in beta. If you have any feedback, please [email us](mailto:kevin@easystreetoffers.com).
 </Note>
 
 ## Welcome
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+To get started, register an account on our [website](https://v2.easystreetoffers.com/auth/signup). Once completed, [reach out](mailto:kevin@easystreetoffers.com) to us to obtain an API key.
+If you want to jump right in, you can go straight to our playground:
 
 <Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
+  title="ESO API Playground"
+  icon="box"
+  href="/api-reference/endpoint/create-or"
 >
   View the OpenAPI specification file
 </Card>
-
-## Authentication
-
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
-
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
-```

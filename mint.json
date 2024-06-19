@@ -7,9 +7,9 @@
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#2E85B7",
+    "light": "#D0ECF2",
+    "dark": "#E77332",
     "anchors": {
       "from": "#0D9373",
       "to": "#07C983"
@@ -18,12 +18,12 @@
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:kevin@easystreetoffers.com"
     }
   ],
   "topbarCtaButton": {
     "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "url": "https://v2.easystreetoffers.com/auth/login"
   },
   "tabs": [
     {
@@ -33,19 +33,14 @@
   ],
   "anchors": [
     {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
+      "name": "Developers",
+      "icon": "discord",
+      "url": "https://discord.gg/PWDTzE8p"
     },
     {
       "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "icon": "facebook",
+      "url": "https://www.facebook.com/groups/esocommunity/"
     }
   ],
   "navigation": [
@@ -77,8 +72,9 @@
     {
       "group": "Endpoint Examples",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
+        "api-reference/endpoint/create-or",
+        "api-reference/endpoint/list-or",
+        "api-reference/endpoint/get-or",
         "api-reference/endpoint/delete"
       ]
     }
