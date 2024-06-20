@@ -28,6 +28,106 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/offer_request"
+              },
+              "example": {
+                "request": {
+                  "offer_request_asking": 3900000,
+                  "test": true
+                },
+                "property": {
+                  "City": "Easy",
+                  "PostalCity": null,
+                  "PostalCode": "94507",
+                  "StreetName": "Alamo Hills Ct",
+                  "UnitNumber": "8",
+                  "Stories": 1,
+                  "Latitude": 37.8450264,
+                  "ListPrice": 2654000,
+                  "Longitude": -121.999418,
+                  "MlsStatus": "Off-market",
+                  "YearBuilt": 1951,
+                  "LivingArea": 2400,
+                  "tags": null,
+                  "Notes": "",
+                  "Sewer": [
+                    "Public Sewer"
+                  ],
+                  "SpaYN": false,
+                  "Levels": null,
+                  "TaxYear": null,
+                  "Basement": null,
+                  "GarageYN": true,
+                  "CarportYN": false,
+                  "ListAgent": null,
+                  "OwnerName": null,
+                  "Utilities": null,
+                  "BasementYN": false,
+                  "ListOffice": null,
+                  "WaterSource": [
+                    "Public"
+                  ],
+                  "property_id": null,
+                  "GarageSpaces": 1,
+                  "ListAgentKey": null,
+                  "OccupantType": "Owner",
+                  "OtherParking": "Attached",
+                  "ParcelNumber": null,
+                  "ParkingTotal": null,
+                  "PropertyType": null,
+                  "StreetNumber": "145",
+                  "StreetSuffix": null,
+                  "AssociationYN": true,
+                  "BathroomsFull": 3,
+                  "BathroomsHalf": 0,
+                  "BedroomsTotal": 3,
+                  "CarportSpaces": null,
+                  "CoveredSpaces": null,
+                  "OpenParkingYN": false,
+                  "PoolPrivateYN": false,
+                  "AssociationFee": 0,
+                  "ListAgentEmail": null,
+                  "ListAgentMlsId": null,
+                  "ListOfficeName": null,
+                  "StandardStatus": "Off Market",
+                  "AssociationFee2": null,
+                  "LeaseExpiration": null,
+                  "LivingAreaUnits": "Square Feet",
+                  "PropertySubType": "Single Family Residence",
+                  "StateOrProvince": "CA",
+                  "StreetDirPrefix": null,
+                  "StreetDirSuffix": null,
+                  "TaxAnnualAmount": null,
+                  "TotalActualRent": null,
+                  "AttachedGarageYN": false,
+                  "BathroomsPartial": null,
+                  "LivingAreaSource": null,
+                  "ListAgentFullName": null,
+                  "ListAgentLastName": null,
+                  "LotSizeSquareFeet": 21000,
+                  "OpenParkingSpaces": null,
+                  "SeniorCommunityYN": false,
+                  "ListAgentFirstName": null,
+                  "inventory_password": 573923,
+                  "BathroomsOneQuarter": null,
+                  "PowerProductionType": "",
+                  "StreetNumberNumeric": null,
+                  "TaxLegalDescription": null,
+                  "HistoryTransactional": null,
+                  "ListAgentDirectPhone": null,
+                  "StreetAdditionalInfo": null,
+                  "StreetSuffixModifier": null,
+                  "BathroomsThreeQuarter": null,
+                  "ConstructionMaterials": [
+                    "Wood Framing"
+                  ],
+                  "ListAgentStateLicense": null,
+                  "AssociationFeeFrequency": "Monthly",
+                  "AssociationFee2Frequency": null,
+                  "TaxOtherAnnualAssessmentAmount": null
+                },
+                "media": [
+                  "https://picsum.photos/200"
+                ]
               }
             }
           },
@@ -128,7 +228,7 @@
           }
         }
       },
-      "put": {
+      "patch": {
         "description": "Updates a single plant based on the ID supplied",
         "parameters": [
           {
@@ -303,7 +403,7 @@
           }
         }
       },
-      "put": {
+      "patch": {
         "description": "Respond to an offer.",
         "parameters": [
           {
@@ -486,7 +586,7 @@
           }
         }
       },
-      "put": {
+      "patch": {
         "description": "Respond to an offer.",
         "parameters": [
           {
@@ -536,6 +636,7 @@
             "$ref": "#/components/schemas/offer_requests_request"
           },
           "property": {
+            "description": "property fields named with Pascal Case convention follow the RESO 2.0 standard",
             "$ref": "#/components/schemas/inventory_properties_request"
           },
           "media": {
@@ -600,7 +701,8 @@
           },
           "test": {
             "type": "boolean",
-            "format": "boolean"
+            "format": "boolean",
+            "description": "set to true for test calls"
           }
         }
       },
@@ -613,7 +715,8 @@
           },
           "test": {
             "type": "boolean",
-            "format": "boolean"
+            "format": "boolean",
+            "description": "set to true for test calls"
           }
         }
       },
@@ -706,7 +809,8 @@
           },
           "test": {
             "type": "boolean",
-            "format": "boolean"
+            "format": "boolean",
+            "description": "set to true for test calls"
           }
         }
       },
@@ -787,7 +891,8 @@
           },
           "test": {
             "type": "boolean",
-            "format": "boolean"
+            "format": "boolean",
+            "description": "set to true for test calls"
           }
         }
       },
@@ -876,7 +981,8 @@
           },
           "test": {
             "type": "boolean",
-            "format": "boolean"
+            "format": "boolean",
+            "description": "set to true for test calls"
           }
         }
       },
@@ -945,13 +1051,69 @@
           },
           "test": {
             "type": "boolean",
-            "format": "boolean"
+            "format": "boolean",
+            "description": "set to true for test calls"
           }
         }
       },
       "inventory_properties": {
         "type": "object",
         "properties": {
+          "StreetNumber": {
+            "maxLength": 25,
+            "type": "string",
+            "format": "character varying"
+          },
+          "StreetName": {
+            "maxLength": 50,
+            "type": "string",
+            "format": "character varying"
+          },
+          "UnitNumber": {
+            "maxLength": 25,
+            "type": "string",
+            "format": "character varying"
+          },
+          "PostalCity": {
+            "maxLength": 50,
+            "type": "string",
+            "format": "character varying"
+          },
+          "StateOrProvince": {
+            "maxLength": 2,
+            "type": "string",
+            "format": "character varying"
+          },
+          "PostalCode": {
+            "maxLength": 10,
+            "type": "string",
+            "format": "character varying"
+          },
+          "MlsStatus": {
+            "maxLength": 50,
+            "type": "string",
+            "format": "character varying"
+          },
+          "BedroomsTotal": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "BathroomsFull": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "BathroomsHalf": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "Latitude": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "Longitude": {
+            "type": "number",
+            "format": "numeric"
+          },
           "AssociationFee": {
             "type": "number",
             "format": "numeric"
@@ -988,14 +1150,6 @@
             "type": "boolean",
             "format": "boolean"
           },
-          "BathroomsFull": {
-            "type": "number",
-            "format": "numeric"
-          },
-          "BathroomsHalf": {
-            "type": "number",
-            "format": "numeric"
-          },
           "BathroomsOneQuarter": {
             "type": "number",
             "format": "numeric"
@@ -1005,10 +1159,6 @@
             "format": "numeric"
           },
           "BathroomsThreeQuarter": {
-            "type": "number",
-            "format": "numeric"
-          },
-          "BedroomsTotal": {
             "type": "number",
             "format": "numeric"
           },
@@ -1046,10 +1196,6 @@
             "maxLength": 255,
             "type": "string",
             "format": "character varying"
-          },
-          "Latitude": {
-            "type": "number",
-            "format": "numeric"
           },
           "Levels": {
             "type": "array",
@@ -1105,18 +1251,9 @@
             "type": "string",
             "format": "character varying"
           },
-          "Longitude": {
-            "type": "number",
-            "format": "numeric"
-          },
           "LotSizeSquareFeet": {
             "type": "number",
             "format": "numeric"
-          },
-          "MlsStatus": {
-            "maxLength": 50,
-            "type": "string",
-            "format": "character varying"
           },
           "OccupantType": {
             "maxLength": 50,
@@ -1154,16 +1291,6 @@
             "type": "boolean",
             "format": "boolean"
           },
-          "PostalCity": {
-            "maxLength": 50,
-            "type": "string",
-            "format": "character varying"
-          },
-          "PostalCode": {
-            "maxLength": 10,
-            "type": "string",
-            "format": "character varying"
-          },
           "PropertySubType": {
             "maxLength": 50,
             "type": "string",
@@ -1193,11 +1320,6 @@
             "type": "string",
             "format": "character varying"
           },
-          "StateOrProvince": {
-            "maxLength": 2,
-            "type": "string",
-            "format": "character varying"
-          },
           "Stories": {
             "type": "number",
             "format": "numeric"
@@ -1214,16 +1336,6 @@
           },
           "StreetDirSuffix": {
             "maxLength": 15,
-            "type": "string",
-            "format": "character varying"
-          },
-          "StreetName": {
-            "maxLength": 50,
-            "type": "string",
-            "format": "character varying"
-          },
-          "StreetNumber": {
-            "maxLength": 25,
             "type": "string",
             "format": "character varying"
           },
@@ -1253,15 +1365,6 @@
           "TaxYear": {
             "type": "number",
             "format": "numeric"
-          },
-          "UnitNumber": {
-            "maxLength": 25,
-            "type": "string",
-            "format": "character varying"
-          },
-          "UnparsedAddress": {
-            "type": "string",
-            "format": "text"
           },
           "Utilities": {
             "type": "array",
@@ -1301,14 +1404,6 @@
             "type": "string",
             "format": "text"
           },
-          "inventory_password": {
-            "type": "integer",
-            "format": "integer"
-          },
-          "inventory_hash": {
-            "type": "string",
-            "format": "text"
-          },
           "tags": {
             "type": "array",
             "items": {
@@ -1344,20 +1439,114 @@
             "type": "string",
             "format": "text"
           },
-          "inventory_uid": {
-            "type": "string",
-            "description": "used to uniquely prevent duplicate by merging with agent_id",
-            "format": "text"
-          },
           "test": {
             "type": "boolean",
-            "format": "boolean"
+            "format": "boolean",
+            "description": "set to true for test calls"
           }
         }
       },
       "inventory_properties_request": {
         "type": "object",
+        "required": [
+          "StreetNumber",
+          "StreetName",
+          "PostalCity",
+          "StateOrProvince",
+          "PostalCode",
+          "BedroomsTotal",
+          "BathroomsFull",
+          "BathroomsHalf",
+          "LivingArea",
+          "LotSizeSquareFeet",
+          "MlsStatus"
+        ],
         "properties": {
+          "StreetNumber": {
+            "maxLength": 25,
+            "type": "string",
+            "format": "character varying"
+          },
+          "StreetName": {
+            "maxLength": 50,
+            "type": "string",
+            "format": "character varying"
+          },
+          "UnitNumber": {
+            "maxLength": 25,
+            "type": "string",
+            "format": "character varying"
+          },
+          "PostalCity": {
+            "maxLength": 50,
+            "type": "string",
+            "format": "character varying"
+          },
+          "StateOrProvince": {
+            "maxLength": 2,
+            "type": "string",
+            "format": "character varying"
+          },
+          "PostalCode": {
+            "maxLength": 10,
+            "type": "string",
+            "format": "character varying"
+          },
+          "BedroomsTotal": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "BathroomsFull": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "BathroomsHalf": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "LivingArea": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "LotSizeSquareFeet": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "GarageYN": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "MlsStatus": {
+            "maxLength": 50,
+            "type": "string",
+            "format": "character varying",
+            "enum": [
+              "On-market",
+              "Off-market"
+            ]
+          },
+          "Longitude": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "Latitude": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "Notes": {
+            "type": "string",
+            "format": "text"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "YearBuilt": {
+            "type": "number",
+            "format": "numeric"
+          },
           "AssociationFee": {
             "type": "number",
             "format": "numeric"
@@ -1394,14 +1583,6 @@
             "type": "boolean",
             "format": "boolean"
           },
-          "BathroomsFull": {
-            "type": "number",
-            "format": "numeric"
-          },
-          "BathroomsHalf": {
-            "type": "number",
-            "format": "numeric"
-          },
           "BathroomsOneQuarter": {
             "type": "number",
             "format": "numeric"
@@ -1411,10 +1592,6 @@
             "format": "numeric"
           },
           "BathroomsThreeQuarter": {
-            "type": "number",
-            "format": "numeric"
-          },
-          "BedroomsTotal": {
             "type": "number",
             "format": "numeric"
           },
@@ -1444,18 +1621,10 @@
             "type": "number",
             "format": "numeric"
           },
-          "GarageYN": {
-            "type": "boolean",
-            "format": "boolean"
-          },
           "HistoryTransactional": {
             "maxLength": 255,
             "type": "string",
             "format": "character varying"
-          },
-          "Latitude": {
-            "type": "number",
-            "format": "numeric"
           },
           "Levels": {
             "type": "array",
@@ -1497,10 +1666,6 @@
             "type": "number",
             "format": "numeric"
           },
-          "LivingArea": {
-            "type": "number",
-            "format": "numeric"
-          },
           "LivingAreaSource": {
             "maxLength": 50,
             "type": "string",
@@ -1508,19 +1673,6 @@
           },
           "LivingAreaUnits": {
             "maxLength": 25,
-            "type": "string",
-            "format": "character varying"
-          },
-          "Longitude": {
-            "type": "number",
-            "format": "numeric"
-          },
-          "LotSizeSquareFeet": {
-            "type": "number",
-            "format": "numeric"
-          },
-          "MlsStatus": {
-            "maxLength": 50,
             "type": "string",
             "format": "character varying"
           },
@@ -1560,16 +1712,6 @@
             "type": "boolean",
             "format": "boolean"
           },
-          "PostalCity": {
-            "maxLength": 50,
-            "type": "string",
-            "format": "character varying"
-          },
-          "PostalCode": {
-            "maxLength": 10,
-            "type": "string",
-            "format": "character varying"
-          },
           "PropertySubType": {
             "maxLength": 50,
             "type": "string",
@@ -1599,11 +1741,6 @@
             "type": "string",
             "format": "character varying"
           },
-          "StateOrProvince": {
-            "maxLength": 2,
-            "type": "string",
-            "format": "character varying"
-          },
           "Stories": {
             "type": "number",
             "format": "numeric"
@@ -1620,16 +1757,6 @@
           },
           "StreetDirSuffix": {
             "maxLength": 15,
-            "type": "string",
-            "format": "character varying"
-          },
-          "StreetName": {
-            "maxLength": 50,
-            "type": "string",
-            "format": "character varying"
-          },
-          "StreetNumber": {
-            "maxLength": 25,
             "type": "string",
             "format": "character varying"
           },
@@ -1660,15 +1787,6 @@
             "type": "number",
             "format": "numeric"
           },
-          "UnitNumber": {
-            "maxLength": 25,
-            "type": "string",
-            "format": "character varying"
-          },
-          "UnparsedAddress": {
-            "type": "string",
-            "format": "text"
-          },
           "Utilities": {
             "type": "array",
             "items": {
@@ -1680,10 +1798,6 @@
             "items": {
               "type": "string"
             }
-          },
-          "YearBuilt": {
-            "type": "number",
-            "format": "numeric"
           },
           "ConstructionMaterials": {
             "type": "array",
@@ -1703,10 +1817,6 @@
             "type": "string",
             "format": "date"
           },
-          "Notes": {
-            "type": "string",
-            "format": "text"
-          },
           "inventory_password": {
             "type": "integer",
             "format": "integer"
@@ -1714,12 +1824,6 @@
           "inventory_hash": {
             "type": "string",
             "format": "text"
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           },
           "TaxAnnualAmount": {
             "type": "integer",
@@ -1750,14 +1854,10 @@
             "type": "string",
             "format": "text"
           },
-          "inventory_uid": {
-            "type": "string",
-            "description": "used to uniquely prevent duplicate by merging with agent_id",
-            "format": "text"
-          },
           "test": {
             "type": "boolean",
-            "format": "boolean"
+            "format": "boolean",
+            "description": "set to true for test calls"
           }
         }
       },
