@@ -89,6 +89,15 @@
         "api-reference/endpoint/get-offers-1",
         "api-reference/endpoint/put-offers"
       ]
+    },
+    {
+      "group": "Counter Offers",
+      "pages": [
+        "api-reference/endpoint/post-counter-offers",
+        "api-reference/endpoint/get-counter-offers",
+        "api-reference/endpoint/get-counter-offers-1",
+        "api-reference/endpoint/put-counter-offers"
+      ]
     }
   ],
   "footerSocials": {

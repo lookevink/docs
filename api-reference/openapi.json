@@ -342,6 +342,189 @@
           }
         }
       }
+    },
+    "/counter-offers": {
+      "post": {
+        "description": "Make an offer on a property. For test calls, please set test=true",
+        "requestBody": {
+          "description": "New offer",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/offers_request"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "successful request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/offers"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Returns all offers on your offer requests or the offers you made.",
+        "parameters": [
+          {
+            "name": "perspective",
+            "in": "query",
+            "description": "select agent to view offers on the requests, buyer to view offers you made, and all for both. be sure to have active buyer or agent profiles set up, or this will return an error.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "agent",
+                "buyer",
+                "all"
+              ]
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Offers response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/offers"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/counter-offers/{counter_offer_id}": {
+      "get": {
+        "description": "Get details of a specific offer.",
+        "parameters": [
+          {
+            "name": "perspective",
+            "in": "query",
+            "description": "select agent to view offers on the requests, buyer to view offers you made, and all for both. be sure to have active buyer or agent profiles set up, or this will return an error.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "agent",
+                "buyer",
+                "all"
+              ]
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Offers response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/offers"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Respond to an offer.",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Offers response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/offers"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -601,6 +784,164 @@
           "offer_decided_at": {
             "type": "string",
             "format": "timestamp with time zone"
+          },
+          "test": {
+            "type": "boolean",
+            "format": "boolean"
+          }
+        }
+      },
+      "counter_offers": {
+        "required": [
+          "counter_offer_id",
+          "created_at"
+        ],
+        "type": "object",
+        "properties": {
+          "counter_offer_id": {
+            "type": "integer",
+            "description": "Note:\nThis is a Primary Key.<pk/>",
+            "format": "bigint"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "timestamp with time zone",
+            "default": "now()"
+          },
+          "agent_id": {
+            "type": "string",
+            "description": "Note:\nThis is a Foreign Key to `agents.agent_id`.<fk table='agents' column='agent_id'/>",
+            "format": "uuid"
+          },
+          "offer_id": {
+            "type": "integer",
+            "description": "Note:\nThis is a Foreign Key to `offers.offer_id`.<fk table='offers' column='offer_id'/>",
+            "format": "bigint"
+          },
+          "counter_offer_amount": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "counter_offer_memo": {
+            "type": "string",
+            "format": "text"
+          },
+          "counter_offer_expires": {
+            "type": "string",
+            "format": "timestamp with time zone"
+          },
+          "counter_offer_terms": {
+            "type": "object",
+            "format": "jsonb"
+          },
+          "counter_offer_status": {
+            "type": "string",
+            "format": "text"
+          },
+          "counter_earnest_money": {
+            "type": "integer",
+            "format": "integer"
+          },
+          "counter_em_hard_post_inspection": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "counter_lease_back": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "counter_lease_back_period": {
+            "type": "integer",
+            "format": "integer"
+          },
+          "counter_flexible_closing": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "counter_post_possession": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "counter_waive_warranty": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "counter_inspection_period": {
+            "type": "integer",
+            "format": "integer"
+          },
+          "counter_post_possession_period": {
+            "type": "integer",
+            "format": "integer"
+          },
+          "test": {
+            "type": "boolean",
+            "format": "boolean"
+          }
+        }
+      },
+      "counter_offers_request": {
+        "type": "object",
+        "properties": {
+          "offer_id": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "counter_offer_amount": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "counter_offer_memo": {
+            "type": "string",
+            "format": "text"
+          },
+          "counter_offer_expires": {
+            "type": "string",
+            "format": "timestamp with time zone"
+          },
+          "counter_offer_terms": {
+            "type": "object",
+            "format": "jsonb"
+          },
+          "counter_offer_status": {
+            "type": "string",
+            "format": "text"
+          },
+          "counter_earnest_money": {
+            "type": "integer",
+            "format": "integer"
+          },
+          "counter_em_hard_post_inspection": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "counter_lease_back": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "counter_lease_back_period": {
+            "type": "integer",
+            "format": "integer"
+          },
+          "counter_flexible_closing": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "counter_post_possession": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "counter_waive_warranty": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "counter_inspection_period": {
+            "type": "integer",
+            "format": "integer"
+          },
+          "counter_post_possession_period": {
+            "type": "integer",
+            "format": "integer"
           },
           "test": {
             "type": "boolean",
