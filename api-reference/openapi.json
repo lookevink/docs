@@ -21,7 +21,7 @@
   "paths": {
     "/offer-requests": {
       "post": {
-        "description": "Creates an offer request. For test calls, please set test=true",
+        "description": "Creates an offer request. ",
         "requestBody": {
           "description": "New offer request",
           "content": {
@@ -160,12 +160,16 @@
         "description": "Returns all offer-requests from the system that the user has access to",
         "parameters": [
           {
-            "name": "limit",
+            "name": "perspective",
             "in": "query",
-            "description": "The maximum number of results to return",
+            "description": "select agent to view offers on the requests, buyer to view offers you made, and all for both. be sure to have active buyer or agent profiles set up, or this will return an error.",
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string",
+              "enum": [
+                "agent",
+                "buyer",
+                "all"
+              ]
             }
           }
         ],
@@ -262,7 +266,7 @@
     },
     "/offers": {
       "post": {
-        "description": "Make an offer on a property. For test calls, please set test=true",
+        "description": "Make an offer on a property. ",
         "requestBody": {
           "description": "New offer",
           "content": {
@@ -311,15 +315,6 @@
                 "buyer",
                 "all"
               ]
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
             }
           }
         ],
@@ -445,7 +440,7 @@
     },
     "/counter-offers": {
       "post": {
-        "description": "Make an offer on a property. For test calls, please set test=true",
+        "description": "Make an offer on a property. ",
         "requestBody": {
           "description": "New offer",
           "content": {
@@ -657,6 +652,7 @@
           "offer_requested_at": {
             "type": "string",
             "format": "timestamp with time zone",
+            "description": "timestamp with time zone",
             "default": "now()"
           },
           "offer_requested_decided_by": {
@@ -677,7 +673,8 @@
           },
           "offer_request_expires_at": {
             "type": "string",
-            "format": "timestamp with time zone"
+            "format": "timestamp with time zone",
+            "description": "timestamp with time zone"
           },
           "offer_request_is_approved": {
             "type": "boolean",
@@ -685,11 +682,13 @@
           },
           "offer_request_decided_at": {
             "type": "string",
-            "format": "timestamp with time zone"
+            "format": "timestamp with time zone",
+            "description": "timestamp with time zone"
           },
           "offer_request_viewed_at": {
             "type": "string",
-            "format": "timestamp with time zone"
+            "format": "timestamp with time zone",
+            "description": "timestamp with time zone"
           },
           "offer_request_status": {
             "type": "string",
@@ -697,12 +696,13 @@
           },
           "offer_request_refreshed_at": {
             "type": "string",
-            "format": "timestamp with time zone"
+            "format": "timestamp with time zone",
+            "description": "timestamp with time zone"
           },
           "test": {
             "type": "boolean",
             "format": "boolean",
-            "description": "set to true for test calls"
+            "description": "set to true s"
           }
         }
       },
@@ -716,7 +716,7 @@
           "test": {
             "type": "boolean",
             "format": "boolean",
-            "description": "set to true for test calls"
+            "description": "set to true s"
           }
         }
       },
@@ -741,6 +741,7 @@
           "created_at": {
             "type": "string",
             "format": "timestamp with time zone",
+            "description": "timestamp with time zone",
             "default": "now()"
           },
           "offer_amount": {
@@ -749,7 +750,8 @@
           },
           "offer_expires": {
             "type": "string",
-            "format": "timestamp with time zone"
+            "format": "timestamp with time zone",
+            "description": "timestamp with time zone"
           },
           "offer_memo": {
             "type": "string",
@@ -805,12 +807,13 @@
           },
           "offer_decided_at": {
             "type": "string",
-            "format": "timestamp with time zone"
+            "format": "timestamp with time zone",
+            "description": "timestamp with time zone"
           },
           "test": {
             "type": "boolean",
             "format": "boolean",
-            "description": "set to true for test calls"
+            "description": "set to true s"
           }
         }
       },
@@ -831,13 +834,10 @@
           },
           "offer_expires": {
             "type": "string",
-            "format": "timestamp with time zone"
+            "format": "timestamp with time zone",
+            "description": "timestamp with time zone"
           },
           "offer_memo": {
-            "type": "string",
-            "format": "text"
-          },
-          "offer_status": {
             "type": "string",
             "format": "text"
           },
@@ -881,18 +881,10 @@
             "type": "integer",
             "format": "integer"
           },
-          "offer_is_counter_offer": {
-            "type": "boolean",
-            "format": "boolean"
-          },
-          "offer_decided_at": {
-            "type": "string",
-            "format": "timestamp with time zone"
-          },
           "test": {
             "type": "boolean",
             "format": "boolean",
-            "description": "set to true for test calls"
+            "description": "set to true s"
           }
         }
       },
@@ -911,6 +903,7 @@
           "created_at": {
             "type": "string",
             "format": "timestamp with time zone",
+            "description": "timestamp with time zone",
             "default": "now()"
           },
           "agent_id": {
@@ -933,7 +926,8 @@
           },
           "counter_offer_expires": {
             "type": "string",
-            "format": "timestamp with time zone"
+            "format": "timestamp with time zone",
+            "description": "timestamp with time zone"
           },
           "counter_offer_terms": {
             "type": "object",
@@ -982,7 +976,7 @@
           "test": {
             "type": "boolean",
             "format": "boolean",
-            "description": "set to true for test calls"
+            "description": "set to true s"
           }
         }
       },
@@ -1003,7 +997,8 @@
           },
           "counter_offer_expires": {
             "type": "string",
-            "format": "timestamp with time zone"
+            "format": "timestamp with time zone",
+            "description": "timestamp with time zone"
           },
           "counter_offer_terms": {
             "type": "object",
@@ -1052,7 +1047,7 @@
           "test": {
             "type": "boolean",
             "format": "boolean",
-            "description": "set to true for test calls"
+            "description": "set to true s"
           }
         }
       },
@@ -1442,7 +1437,7 @@
           "test": {
             "type": "boolean",
             "format": "boolean",
-            "description": "set to true for test calls"
+            "description": "set to true s"
           }
         }
       },
@@ -1857,7 +1852,7 @@
           "test": {
             "type": "boolean",
             "format": "boolean",
-            "description": "set to true for test calls"
+            "description": "set to true s"
           }
         }
       },
