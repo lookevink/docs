@@ -34,8 +34,8 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "plant response",
+          "201": {
+            "description": "successful request",
             "content": {
               "application/json": {
                 "schema": {
@@ -159,6 +159,189 @@
           }
         }
       }
+    },
+    "/offers": {
+      "post": {
+        "description": "Make an offer on a property. For test calls, please set test=true",
+        "requestBody": {
+          "description": "New offer",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/offers_request"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "successful request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/offers"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Returns all offers on your offer requests or the offers you made.",
+        "parameters": [
+          {
+            "name": "perspective",
+            "in": "query",
+            "description": "select agent to view offers on the requests, buyer to view offers you made, and all for both. be sure to have active buyer or agent profiles set up, or this will return an error.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "agent",
+                "buyer",
+                "all"
+              ]
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Offers response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/offers"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/offers/{offer_id}": {
+      "get": {
+        "description": "Get details of a specific offer.",
+        "parameters": [
+          {
+            "name": "perspective",
+            "in": "query",
+            "description": "select agent to view offers on the requests, buyer to view offers you made, and all for both. be sure to have active buyer or agent profiles set up, or this will return an error.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "agent",
+                "buyer",
+                "all"
+              ]
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Offers response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/offers"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Respond to an offer.",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Offers response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/offers"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -171,6 +354,12 @@
           },
           "property": {
             "$ref": "#/components/schemas/inventory_properties_request"
+          },
+          "media": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -179,7 +368,6 @@
         "properties": {
           "inventory_property_id": {
             "type": "integer",
-            "description": "Note:\nThis is a Foreign Key to `inventory_properties.inventory_property_id`.<fk table='inventory_properties' column='inventory_property_id'/>",
             "format": "bigint"
           },
           "offer_requested_at": {
@@ -189,7 +377,6 @@
           },
           "offer_requested_decided_by": {
             "type": "string",
-            "description": "Note:\nThis is a Foreign Key to `acq_members.acq_member_id`.<fk table='acq_members' column='acq_member_id'/>",
             "format": "uuid"
           },
           "offer_request_is_mls": {
@@ -240,6 +427,180 @@
           "offer_request_asking": {
             "type": "integer",
             "format": "bigint"
+          },
+          "test": {
+            "type": "boolean",
+            "format": "boolean"
+          }
+        }
+      },
+      "offers": {
+        "required": [
+          "offer_amount"
+        ],
+        "type": "object",
+        "properties": {
+          "offer_id": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "buyer_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "offer_request_id": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "timestamp with time zone",
+            "default": "now()"
+          },
+          "offer_amount": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "offer_expires": {
+            "type": "string",
+            "format": "timestamp with time zone"
+          },
+          "offer_memo": {
+            "type": "string",
+            "format": "text"
+          },
+          "offer_status": {
+            "type": "string",
+            "format": "text"
+          },
+          "additional_terms": {
+            "type": "object",
+            "format": "jsonb"
+          },
+          "earnest_money": {
+            "type": "integer",
+            "format": "integer"
+          },
+          "em_hard_post_inspection": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "lease_back": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "lease_back_period": {
+            "type": "integer",
+            "format": "integer"
+          },
+          "flexible_closing": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "post_possession": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "waive_warranty": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "inspection_period": {
+            "type": "integer",
+            "format": "integer"
+          },
+          "post_possession_period": {
+            "type": "integer",
+            "format": "integer"
+          },
+          "offer_is_counter_offer": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "offer_decided_at": {
+            "type": "string",
+            "format": "timestamp with time zone"
+          },
+          "test": {
+            "type": "boolean",
+            "format": "boolean"
+          }
+        }
+      },
+      "offers_request": {
+        "required": [
+          "offer_request_id",
+          "offer_amount"
+        ],
+        "type": "object",
+        "properties": {
+          "offer_request_id": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "offer_amount": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "offer_expires": {
+            "type": "string",
+            "format": "timestamp with time zone"
+          },
+          "offer_memo": {
+            "type": "string",
+            "format": "text"
+          },
+          "offer_status": {
+            "type": "string",
+            "format": "text"
+          },
+          "additional_terms": {
+            "type": "object",
+            "format": "jsonb"
+          },
+          "earnest_money": {
+            "type": "integer",
+            "format": "integer"
+          },
+          "em_hard_post_inspection": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "lease_back": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "lease_back_period": {
+            "type": "integer",
+            "format": "integer"
+          },
+          "flexible_closing": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "post_possession": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "waive_warranty": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "inspection_period": {
+            "type": "integer",
+            "format": "integer"
+          },
+          "post_possession_period": {
+            "type": "integer",
+            "format": "integer"
+          },
+          "offer_is_counter_offer": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "offer_decided_at": {
+            "type": "string",
+            "format": "timestamp with time zone"
           },
           "test": {
             "type": "boolean",
@@ -1058,42 +1419,6 @@
             "format": "boolean"
           }
         }
-      },
-      "Plant": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
-          },
-          "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
-          }
-        }
-      },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
-          },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          }
-        ]
       },
       "Error": {
         "required": [
