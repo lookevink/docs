@@ -157,7 +157,7 @@
         }
       },
       "get": {
-        "description": "Returns all offer-requests from the system that the user has access to",
+        "description": "Returns all the current offer-requests from the system that the user has access to",
         "parameters": [
           {
             "name": "perspective",
@@ -175,7 +175,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Plant response",
+            "description": "Offer request response",
             "content": {
               "application/json": {
                 "schema": {
@@ -620,6 +620,66 @@
           }
         }
       }
+    },
+    "/wh": {
+      "post": {
+        "description": "Created a webhook to receive notifications on offers and requests.",
+        "requestBody": {
+          "description": "New callback url",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/webhook_request"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "webhook url created"
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "Update your callback url.",
+        "requestBody": {
+          "description": "Update callback url",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/webhook_request"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "webhook url updated"
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1048,6 +1108,16 @@
             "type": "boolean",
             "format": "boolean",
             "description": "set to true s"
+          }
+        }
+      },
+      "webhook_request": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://example.com/webhook"
           }
         }
       },

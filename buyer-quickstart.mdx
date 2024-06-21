@@ -1,0 +1,104 @@
+---
+title: 'Buyer Quickstart'
+description: 'Make cash offers in under 10 minutes'
+---
+
+## Accessing our Opportunities
+During the discovery calls, we should have set up your customized access based on your use case. To view your current opportunities,
+you can view the list of our active cash offer requests ("offer requests") by getting the `/offer-requests` endpoint:
+```curl
+curl --request GET \
+  --url https://v2.easystreetoffers.com/api/v2/offer-requests \
+  --header 'Authorization: <api-key>'
+```
+<Note>You can make this call and view response payload directly in our [playground](/api-reference/endpoint/get-offer-requests)</Note>
+
+You will get something like this:
+```json
+[
+    {
+        "request": {
+            "offer_request_id": 188,
+            "offer_requested_at": "2024-05-22T21:52:19.588454+00:00",
+            "offer_request_asking": 420000,
+            "offer_request_status": "receiving_offers"
+        },
+        "property": {
+            "City": "Mesa",
+            "sl_id": "1",
+            "ListPrice": 420000,
+            "MlsStatus": "Active",
+            "YearBuilt": 1998,
+            "LivingArea": 1388,
+            "PostalCode": "85207",
+            "StreetName": "E Contessa St",
+            "cbsa_title": "Phoenix-Mesa-Chandler, AZ",
+            "updated_at": "2024-05-22T21:52:19.367658+00:00",
+            "inputted_at": "2024-05-22T21:52:19.367658+00:00",
+            "StreetNumber": "11538",
+            "BathroomsFull": 3,
+            "BedroomsTotal": 2,
+            "CountyOrParish": "Mesa",
+            "StateOrProvince": "AZ",
+            "UnparsedAddress": "11538 E Contessa St",
+            "ListAgentFullName": "VREI TEST",
+            "LotSizeSquareFeet": 5258,
+            "inventory_property_id": 250
+        }
+    },
+  ...
+  ]
+```
+Fields named with Pascal Case convention follow the [RESO 2.0](https://ddwiki.reso.org/display/DDW20/Data+Dictionary+2.0+Wiki) standard. Because we have 100+ fields per property, we've hidden the fields with null as values. 
+To view a list of all possible return fields, please visit our [API Reference](/api-reference/endpoint/get-offer-requests).
+
+## Making a cash offer
+The `offer_request_id` uniquely identifies a cash offer request. To make a cash offer, you can post to the `/offers` endpoint:
+```curl
+curl --request POST \
+  --url https://v2.easystreetoffers.com/api/v2/offers \
+  --header 'Authorization: <api-key>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "offer_request_id": 123,
+  "offer_amount": 123,
+  "offer_expires": "<string>",
+  "offer_memo": "<string>",
+  "additional_terms": {},
+  "earnest_money": 123,
+  "em_hard_post_inspection": true,
+  "lease_back": true,
+  "lease_back_period": 123,
+  "flexible_closing": true,
+  "post_possession": true,
+  "waive_warranty": true,
+  "inspection_period": 123,
+  "post_possession_period": 123,
+  "test": true
+}'
+```
+<Note>Note the `"test":true` field. This offer will be sent to the void and not visible to our agents, so be sure to remove it or set it as false in production</Note>
+
+## Configure a webhook
+We will send a POST request to the webhook URL you provide when you receive a decision on your offer. You can create one by posting:
+```curl
+curl --request POST \
+  --url https://v2.easystreetoffers.com/api/v2/wh \
+  --header 'Authorization: <api-key>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "url": "https://example.com/webhook"
+}'
+```
+
+## Receiving offer updates
+```json
+{
+  "offer_request_id": 188,
+  "offer_id": 235,
+  "offer_status": "offer_accepted",
+
+}
+```
+
+## Viewing your cash offers
