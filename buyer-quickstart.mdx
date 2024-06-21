@@ -91,6 +91,15 @@ curl --request POST \
 }'
 ```
 
+## Viewing your cash offers
+You can view your cash offers by getting the `/offers` endpoint:
+```curl
+curl --request GET \
+  --url https://v2.easystreetoffers.com/api/v2/offers \
+  --header 'Authorization: <api-key>'
+```
+
+
 ## Receiving offer updates
 ```json
 {
@@ -100,5 +109,8 @@ curl --request POST \
 
 }
 ```
+View all the possible webhook payload here.
 
-## Viewing your cash offers
+If an agent accepts your offer, our acquistion team will contact you to move this deal forward.
+
+<Note>Ready? Head to our API Reference for full range of functions.</Note>
