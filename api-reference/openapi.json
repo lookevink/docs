@@ -360,7 +360,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/offers_request"
+                "$ref": "#/components/schemas/counter_offers_request"
               }
             }
           },

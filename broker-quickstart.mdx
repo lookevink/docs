@@ -91,10 +91,10 @@ If successful, you will receive the following response:
     "submitted_by_user": "e83d3b1f-ed37-4e58-90c6-9046049b8e2e"
 }
 ```
-You've just submitted your first Cash Offer Request!
+You've just submitted your first Cash Offer Request! You can use the offer_request_id to identify it in your system & view the current status of your request.
 
 ## Receiving notifications
-By default, we send out email notifications for when offer requests are approved to be sent to buyers, and when offers are made on your requests. 
+By default, we send out email notifications to the `ListAgentEmail` for when offer requests are approved to be sent to buyers, and when offers are made on your requests. 
 <Warning>If you leave out the ListAgentEmail or set it as null in your request API call, then the email notifications for the offer request will be sent to the email used to set up the API</Warning>
 
 Additionally, you can set up a webhook to receive notifications on key events related to your offer requests by posting to the `/wh` endpoint:
@@ -108,11 +108,139 @@ curl --request POST \
 }'
 ```
 
+When an offer request is approved, we'll send a POST request to the webhook URL you provided with the following JSON body:
+```json
+{
+  "offer_request_id": 188,
+  "offer_request_status": "receiving_offers"
+}
+```
 
-## Viewing your cash offers
+When an offer is made on your request, we'll send a POST request to the webhook URL you provided with the following JSON body:
+```json
+{
+  "offer_id": 88,
+  "offer_request_id": 144,
+  "offer_amount": 3800000,
+  "created_at": "2024-05-18T00:27:44.993+00:00",
+  "offer_expires": "2024-05-18T00:21:50.714+00:00",
+  "offer_memo": "",
+  "offer_status": "active",
+  "additional_terms": null,
+  "earnest_money": 0,
+  "em_hard_post_inspection": false,
+  "lease_back": false,
+  "lease_back_period": 0,
+  "flexible_closing": false,
+  "post_possession": false,
+  "waive_warranty": false,
+  "inspection_period": 10,
+  "post_possession_period": 0,
+  "offer_is_counter_offer": null,
+  "offer_decided_at": null,
+  "test": null
+}
+```
+
+
+## Viewing all your cash offers
 You can view the cash offers on your requests by getting the `/offers` endpoint:
 ```curl
 curl --request GET \
   --url https://v2.easystreetoffers.com/api/v2/offers \
   --header 'Authorization: <api-key>'
 ```
+Returning
+```json
+[
+  {
+    "offer_id": 88,
+    "offer_request_id": 144,
+    "offer_amount": 3800000,
+    "created_at": "2024-05-18T00:27:44.993+00:00",
+    "offer_expires": "2024-05-18T00:21:50.714+00:00",
+    "offer_memo": "",
+    "offer_status": "active",
+    "additional_terms": null,
+    "earnest_money": 0,
+    "em_hard_post_inspection": false,
+    "lease_back": false,
+    "lease_back_period": 0,
+    "flexible_closing": false,
+    "post_possession": false,
+    "waive_warranty": false,
+    "inspection_period": 10,
+    "post_possession_period": 0,
+    "offer_is_counter_offer": null,
+    "offer_decided_at": null,
+    "test": null
+  },
+  ...
+]
+```
+
+## Responding to offers
+If you have an offer that you'd like to respond to, you can do so by sending a PATCH request to the `/offers` endpoint:
+
+### Accepting an offer
+You can accept an offer by sending a PATCH request to the `/offers` endpoint with offer_status as `accepted`:
+```curl
+curl --location --request PATCH 'https://v2.easystreetoffers.com/api/v2/offers/' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: eso_altlx0pb8sqy27wdta1aqbh8ta7p0jw4avvoka6geknqhbex32ly62nofprremvu6azrwl3iktry4oyrxn2yng' \
+--header 'Cookie: Cookie_1=value; sb-lhwmojwuomyatuyvddbc-auth-token=%7B%22access_token%22%3A%22eyJhbGciOiJIUzI1NiIsImtpZCI6Im9aVnNnZmpFeDgyY2tPTnUiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzA3NTAyNzA1LCJpYXQiOjE3MDc0OTkxMDUsImlzcyI6Imh0dHBzOi8vbGh3bW9qd3VvbXlhdHV5dmRkYmMuc3VwYWJhc2UuY28vYXV0aC92MSIsInN1YiI6ImUwOTVjOGM1LTA1OTktNDBiNi04ODE2LTkxMDdmNjUwMWVmNyIsImVtYWlsIjoicm9iZXJ0c29ua2VAY3R0LmNvbSIsInBob25lIjoiIiwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0sInVzZXJfbWV0YWRhdGEiOnt9LCJyb2xlIjoiYXV0aGVudGljYXRlZCIsImFhbCI6ImFhbDEiLCJhbXIiOlt7Im1ldGhvZCI6InBhc3N3b3JkIiwidGltZXN0YW1wIjoxNzA3NDM3Mjk5fV0sInNlc3Npb25faWQiOiJjMTY3ZDk5Ni02MDFjLTRhMDEtODEzMi04MDQ0NjE0MjkzYTYifQ.G1By_21Thoquzf-oozl3RuzKJNFyjtBz4CP_eDberqA%22%2C%22token_type%22%3A%22bearer%22%2C%22expires_in%22%3A3600%2C%22expires_at%22%3A1707502705%2C%22refresh_token%22%3A%22IL-ARzIHWA5SOOyyf2Us0A%22%2C%22user%22%3A%7B%22id%22%3A%22e095c8c5-0599-40b6-8816-9107f6501ef7%22%2C%22aud%22%3A%22authenticated%22%2C%22role%22%3A%22authenticated%22%2C%22email%22%3A%22robertsonke%40ctt.com%22%2C%22email_confirmed_at%22%3A%222024-02-09T00%3A06%3A40.261087Z%22%2C%22phone%22%3A%22%22%2C%22confirmed_at%22%3A%222024-02-09T00%3A06%3A40.261087Z%22%2C%22last_sign_in_at%22%3A%222024-02-09T00%3A08%3A19.34492Z%22%2C%22app_metadata%22%3A%7B%22provider%22%3A%22email%22%2C%22providers%22%3A%5B%22email%22%5D%7D%2C%22user_metadata%22%3A%7B%7D%2C%22identities%22%3A%5B%7B%22identity_id%22%3A%22f58ecca8-5b34-498c-8cce-9625e9e2917c%22%2C%22id%22%3A%22e095c8c5-0599-40b6-8816-9107f6501ef7%22%2C%22user_id%22%3A%22e095c8c5-0599-40b6-8816-9107f6501ef7%22%2C%22identity_data%22%3A%7B%22email%22%3A%22robertsonke%40ctt.com%22%2C%22email_verified%22%3Afalse%2C%22phone_verified%22%3Afalse%2C%22sub%22%3A%22e095c8c5-0599-40b6-8816-9107f6501ef7%22%7D%2C%22provider%22%3A%22email%22%2C%22last_sign_in_at%22%3A%222024-02-09T00%3A06%3A40.256383Z%22%2C%22created_at%22%3A%222024-02-09T00%3A06%3A40.256444Z%22%2C%22updated_at%22%3A%222024-02-09T00%3A06%3A40.256444Z%22%2C%22email%22%3A%22robertsonke%40ctt.com%22%7D%5D%2C%22created_at%22%3A%222024-02-09T00%3A06%3A40.247397Z%22%2C%22updated_at%22%3A%222024-02-09T17%3A17%3A33.946026Z%22%7D%7D' \
+--data '{
+    "offer_id": 88,
+    "offer_status": "accepted"
+}'
+```
+<Note>Once you accept an offer, our acquisitions team will be notified and reach out to you with next steps.</Note>
+<Warning>Once you accept **one** offer, all of the other offers and counter offers you made will be invalidated.</Warning>
+
+### Rejecting an offer
+You can accept an offer by sending a PATCH request to the `/offers` endpoint with offer_status as `rejected`:
+```curl
+curl --location --request PATCH 'https://v2.easystreetoffers.com/api/v2/offers/' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: eso_altlx0pb8sqy27wdta1aqbh8ta7p0jw4avvoka6geknqhbex32ly62nofprremvu6azrwl3iktry4oyrxn2yng' \
+--header 'Cookie: Cookie_1=value; sb-lhwmojwuomyatuyvddbc-auth-token=%7B%22access_token%22%3A%22eyJhbGciOiJIUzI1NiIsImtpZCI6Im9aVnNnZmpFeDgyY2tPTnUiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzA3NTAyNzA1LCJpYXQiOjE3MDc0OTkxMDUsImlzcyI6Imh0dHBzOi8vbGh3bW9qd3VvbXlhdHV5dmRkYmMuc3VwYWJhc2UuY28vYXV0aC92MSIsInN1YiI6ImUwOTVjOGM1LTA1OTktNDBiNi04ODE2LTkxMDdmNjUwMWVmNyIsImVtYWlsIjoicm9iZXJ0c29ua2VAY3R0LmNvbSIsInBob25lIjoiIiwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0sInVzZXJfbWV0YWRhdGEiOnt9LCJyb2xlIjoiYXV0aGVudGljYXRlZCIsImFhbCI6ImFhbDEiLCJhbXIiOlt7Im1ldGhvZCI6InBhc3N3b3JkIiwidGltZXN0YW1wIjoxNzA3NDM3Mjk5fV0sInNlc3Npb25faWQiOiJjMTY3ZDk5Ni02MDFjLTRhMDEtODEzMi04MDQ0NjE0MjkzYTYifQ.G1By_21Thoquzf-oozl3RuzKJNFyjtBz4CP_eDberqA%22%2C%22token_type%22%3A%22bearer%22%2C%22expires_in%22%3A3600%2C%22expires_at%22%3A1707502705%2C%22refresh_token%22%3A%22IL-ARzIHWA5SOOyyf2Us0A%22%2C%22user%22%3A%7B%22id%22%3A%22e095c8c5-0599-40b6-8816-9107f6501ef7%22%2C%22aud%22%3A%22authenticated%22%2C%22role%22%3A%22authenticated%22%2C%22email%22%3A%22robertsonke%40ctt.com%22%2C%22email_confirmed_at%22%3A%222024-02-09T00%3A06%3A40.261087Z%22%2C%22phone%22%3A%22%22%2C%22confirmed_at%22%3A%222024-02-09T00%3A06%3A40.261087Z%22%2C%22last_sign_in_at%22%3A%222024-02-09T00%3A08%3A19.34492Z%22%2C%22app_metadata%22%3A%7B%22provider%22%3A%22email%22%2C%22providers%22%3A%5B%22email%22%5D%7D%2C%22user_metadata%22%3A%7B%7D%2C%22identities%22%3A%5B%7B%22identity_id%22%3A%22f58ecca8-5b34-498c-8cce-9625e9e2917c%22%2C%22id%22%3A%22e095c8c5-0599-40b6-8816-9107f6501ef7%22%2C%22user_id%22%3A%22e095c8c5-0599-40b6-8816-9107f6501ef7%22%2C%22identity_data%22%3A%7B%22email%22%3A%22robertsonke%40ctt.com%22%2C%22email_verified%22%3Afalse%2C%22phone_verified%22%3Afalse%2C%22sub%22%3A%22e095c8c5-0599-40b6-8816-9107f6501ef7%22%7D%2C%22provider%22%3A%22email%22%2C%22last_sign_in_at%22%3A%222024-02-09T00%3A06%3A40.256383Z%22%2C%22created_at%22%3A%222024-02-09T00%3A06%3A40.256444Z%22%2C%22updated_at%22%3A%222024-02-09T00%3A06%3A40.256444Z%22%2C%22email%22%3A%22robertsonke%40ctt.com%22%7D%5D%2C%22created_at%22%3A%222024-02-09T00%3A06%3A40.247397Z%22%2C%22updated_at%22%3A%222024-02-09T17%3A17%3A33.946026Z%22%7D%7D' \
+--data '{
+    "offer_id": 88,
+    "offer_status": "rejected"
+}'
+```
+
+
+## Countering offers
+If you have an offer that you'd like to counter, you can do so by posting to the `/counter-offers` endpoint:
+
+```curl
+curl --request POST \
+  --url https://v2.easystreetoffers.com/api/v2/counter-offers \
+  --header 'Authorization: <api-key>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "offer_id": 123,
+  "counter_offer_amount": 123,
+  "counter_offer_memo": "<string>",
+  "counter_offer_expires": "<string>",
+  "counter_offer_terms": {},
+  "counter_offer_status": "<string>",
+  "counter_earnest_money": 123,
+  "counter_em_hard_post_inspection": true,
+  "counter_lease_back": true,
+  "counter_lease_back_period": 123,
+  "counter_flexible_closing": true,
+  "counter_post_possession": true,
+  "counter_waive_warranty": true,
+  "counter_inspection_period": 123,
+  "counter_post_possession_period": 123,
+  "test": true
+}'
+```
+
+
+<Warning>If the buyer accepts your counter offer, we will reject **all** other offers made on your offer request. Only use a counter offer if you are prepared for the buyer to accept instanceof.</Warning>
+
+## Next Steps
+That's it! Go to our API playground to explore all the options and features.
