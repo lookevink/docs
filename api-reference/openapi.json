@@ -114,21 +114,7 @@
       },
       "get": {
         "description": "Returns all the current offer-requests from the system that the user has access to",
-        "parameters": [
-          {
-            "name": "perspective",
-            "in": "query",
-            "description": "select agent to view offers on the requests, buyer to view offers you made, and all for both. be sure to have active buyer or agent profiles set up, or this will return an error.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "agent",
-                "buyer",
-                "all"
-              ]
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Offer request response",
@@ -158,7 +144,7 @@
     },
     "/offer-requests/{offer_request_id}": {
       "get": {
-        "description": "Get a single plant based on the ID supplied",
+        "description": "Get a single offer request based on the ID supplied",
         "parameters": [
           {
             "name": "offer_request_id",
@@ -259,21 +245,6 @@
       },
       "get": {
         "description": "Returns all offers on your offer requests or the offers you made.",
-        "parameters": [
-          {
-            "name": "perspective",
-            "in": "query",
-            "description": "select agent to view offers on the requests, buyer to view offers you made, and all for both. be sure to have active buyer or agent profiles set up, or this will return an error.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "agent",
-                "buyer",
-                "all"
-              ]
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Offers response",
@@ -305,19 +276,6 @@
       "get": {
         "description": "Get details of a specific offer.",
         "parameters": [
-          {
-            "name": "perspective",
-            "in": "query",
-            "description": "select agent to view offers on the requests, buyer to view offers you made, and all for both. be sure to have active buyer or agent profiles set up, or this will return an error.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "agent",
-                "buyer",
-                "all"
-              ]
-            }
-          },
           {
             "name": "limit",
             "in": "query",
@@ -435,19 +393,6 @@
         "description": "Returns all offers on your offer requests or the offers you made.",
         "parameters": [
           {
-            "name": "perspective",
-            "in": "query",
-            "description": "select agent to view offers on the requests, buyer to view offers you made, and all for both. be sure to have active buyer or agent profiles set up, or this will return an error.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "agent",
-                "buyer",
-                "all"
-              ]
-            }
-          },
-          {
             "name": "limit",
             "in": "query",
             "description": "The maximum number of results to return",
@@ -488,19 +433,6 @@
       "get": {
         "description": "Get details of a specific offer.",
         "parameters": [
-          {
-            "name": "perspective",
-            "in": "query",
-            "description": "select agent to view offers on the requests, buyer to view offers you made, and all for both. be sure to have active buyer or agent profiles set up, or this will return an error.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "agent",
-                "buyer",
-                "all"
-              ]
-            }
-          },
           {
             "name": "limit",
             "in": "query",
@@ -1475,11 +1407,6 @@
           "PostalCity",
           "StateOrProvince",
           "PostalCode",
-          "BedroomsTotal",
-          "BathroomsFull",
-          "BathroomsHalf",
-          "LivingArea",
-          "LotSizeSquareFeet",
           "MlsStatus"
         ],
         "properties": {
@@ -1513,6 +1440,15 @@
             "type": "string",
             "format": "character varying"
           },
+          "MlsStatus": {
+            "maxLength": 50,
+            "type": "string",
+            "format": "character varying",
+            "enum": [
+              "On-market",
+              "Off-market"
+            ]
+          },
           "BedroomsTotal": {
             "type": "number",
             "format": "numeric"
@@ -1536,15 +1472,6 @@
           "GarageYN": {
             "type": "boolean",
             "format": "boolean"
-          },
-          "MlsStatus": {
-            "maxLength": 50,
-            "type": "string",
-            "format": "character varying",
-            "enum": [
-              "On-market",
-              "Off-market"
-            ]
           },
           "Longitude": {
             "type": "number",

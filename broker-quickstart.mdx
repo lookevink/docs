@@ -4,7 +4,7 @@ description: 'Start bulk request cash offers within a day'
 ---
 
 ## Make your first request for cash offers
-To make your first request for cash offers, you can make a POST request to the `/offer-requests` endpoint:
+To make your first test request for cash offers, you can make a POST request to the `/offer-requests` endpoint in the playground or with cURL:
 ```curl
 curl --request POST \
   --url https://v2.easystreetoffers.com/api/v2/offer-requests \
@@ -68,7 +68,51 @@ curl --request POST \
   ]
 }'
 ```
-
 <Note>Fields named with Pascal Case convention follow the [RESO 2.0](https://ddwiki.reso.org/display/DDW20/Data+Dictionary+2.0+Wiki) standard. Please reference the Wiki before inquiring about field definitions</Note>
 
+If successful, you will receive the following response:
+```json
+{
+    "offer_request_id": 738,
+    "requested_by_agent": "8cedea14-84be-4081-9370-c8a782db0480",
+    "inventory_property_id": 844,
+    "offer_requested_at": "2024-06-24T15:30:52.755574+00:00",
+    "offer_requested_decided_by": null,
+    "offer_request_is_mls": null,
+    "offer_request_deal_type": null,
+    "offer_request_asking": 3900000,
+    "offer_request_expires_at": null,
+    "offer_request_is_approved": null,
+    "offer_request_decided_at": null,
+    "offer_request_viewed_at": null,
+    "offer_request_status": "in_review",
+    "offer_request_refreshed_at": null,
+    "test": true,
+    "submitted_by_user": "e83d3b1f-ed37-4e58-90c6-9046049b8e2e"
+}
+```
+You've just submitted your first Cash Offer Request!
+
+## Receiving notifications
+By default, we send out email notifications for when offer requests are approved to be sent to buyers, and when offers are made on your requests. 
+<Warning>If you leave out the ListAgentEmail or set it as null in your request API call, then the email notifications for the offer request will be sent to the email used to set up the API</Warning>
+
+Additionally, you can set up a webhook to receive notifications on key events related to your offer requests by posting to the `/wh` endpoint:
+```curl
+curl --request POST \
+  --url https://v2.easystreetoffers.com/api/v2/wh \
+  --header 'Authorization: <api-key>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "url": "https://example.com/webhook"
+}'
+```
+
+
 ## Viewing your cash offers
+You can view the cash offers on your requests by getting the `/offers` endpoint:
+```curl
+curl --request GET \
+  --url https://v2.easystreetoffers.com/api/v2/offers \
+  --header 'Authorization: <api-key>'
+```
