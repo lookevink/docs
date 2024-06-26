@@ -158,9 +158,15 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
+          "200": {
+            "description": "Offer request response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/offer_request"
+                }
+              }
+            }
           },
           "400": {
             "description": "unexpected error",
@@ -583,6 +589,7 @@
             "$ref": "#/components/schemas/inventory_properties_request"
           },
           "media": {
+            "description": "List of signed URLs. Note that the URLs will become invalid after 10 minutes.",
             "type": "array",
             "items": {
               "type": "string"
