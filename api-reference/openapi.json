@@ -607,9 +607,24 @@
       "offer_requests": {
         "type": "object",
         "properties": {
-          "inventory_property_id": {
+          "offer_request_asking": {
             "type": "integer",
+            "description": "Asking price for the property",
             "format": "bigint"
+          },
+          "offer_request_status": {
+            "type": "string",
+            "format": "string",
+            "enum": [
+              "receiving_offers",
+              "in_review",
+              "expired",
+              "denied",
+              "no_offers",
+              "in_submission",
+              "pending_approval"
+            ],
+            "description": "Offer request statuses:\n * `receiving_offers` - Offer Request is active and receiving cash offers.\n * `in_review` - Offer request is pending review by our analysts, and are not yet sent to buyers. \n * `expired` - Offer request has expired and is ready to be renewed. \n * `denied` - Offer request does not meet our criteria, and has been denied. \n * `no_offers` - Offer request has not received any offers, and is ready to be refreshed. \n * `in_submission` - Offer request is incomplete. \n * `pending_approval` - Offer request has been reviewed, and is pending final approval process."
           },
           "offer_requested_at": {
             "type": "string",
@@ -623,15 +638,12 @@
           },
           "offer_request_is_mls": {
             "type": "boolean",
+            "description": "Is the property for the offer request listed on MLS",
             "format": "boolean"
           },
           "offer_request_deal_type": {
             "type": "string",
             "format": "text"
-          },
-          "offer_request_asking": {
-            "type": "integer",
-            "format": "bigint"
           },
           "offer_request_expires_at": {
             "type": "string",
@@ -640,6 +652,7 @@
           },
           "offer_request_is_approved": {
             "type": "boolean",
+            "description": "Field is true after we have approved the offer request to be sent to buyers.",
             "format": "boolean"
           },
           "offer_request_decided_at": {
@@ -652,14 +665,15 @@
             "format": "timestamp with time zone",
             "description": "timestamp with time zone"
           },
-          "offer_request_status": {
-            "type": "string",
-            "format": "text"
-          },
           "offer_request_refreshed_at": {
             "type": "string",
             "format": "timestamp with time zone",
             "description": "timestamp with time zone"
+          },
+          "inventory_property_id": {
+            "type": "integer",
+            "description": "Used to uniquely identify the property in our system. Can safely ignore",
+            "format": "bigint"
           },
           "test": {
             "type": "boolean",
