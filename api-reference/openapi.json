@@ -588,6 +588,13 @@
             "description": "property fields named with Pascal Case convention follow the RESO 2.0 standard",
             "$ref": "#/components/schemas/inventory_properties_request"
           },
+          "assumptions": {
+            "description": "Analyst assumptions. Only available to buyers",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/analyst_assumptions"
+            }
+          },
           "media": {
             "description": "List of signed URLs. Note that the URLs will become invalid after 10 minutes.",
             "type": "array",
@@ -1003,6 +1010,112 @@
             "type": "boolean",
             "format": "boolean",
             "description": "set to true s"
+          }
+        }
+      },
+      "analyst_assumptions": {
+        "type": "object",
+        "properties": {
+          "assumption_id": {
+            "type": "integer",
+            "description": "Identifies assumptions.",
+            "format": "bigint"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "timestamp with time zone",
+            "default": "now()"
+          },
+          "inventory_property_id": {
+            "type": "integer",
+            "description": "The property to which these assumptions apply.",
+            "format": "bigint"
+          },
+          "ltr_monthly_rent": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "ltr_annual_rent_increase": {
+            "type": "number",
+            "format": "double precision"
+          },
+          "ltr_arv": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "ltr_renovation_cost": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "str_season_1_daily_rate": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "str_season_2_daily_rate": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "str_season_3_daily_rate": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "str_season_4_daily_rate": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "str_arv": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "str_renovation_cost": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "rr_weekly_rent_per_room": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "rr_arv": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "rr_beds": {
+            "type": "integer",
+            "format": "smallint"
+          },
+          "rr_baths": {
+            "type": "integer",
+            "format": "smallint"
+          },
+          "ff_arv": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "ff_renovation_cost": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "property_annual_tax": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "property_annual_hoa": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "rr_renovation_cost": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "reno_items": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "fmv": {
+            "type": "integer",
+            "format": "bigint"
           }
         }
       },
