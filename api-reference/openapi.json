@@ -196,8 +196,46 @@
         ],
         "responses": {
           "204": {
-            "description": "Plant deleted",
+            "description": "deleted",
             "content": {}
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/offer-requests/prelim": {
+      "post": {
+        "description": "Get Preliminary Buyer & Buy Box Matches",
+        "requestBody": {
+          "description": "Preliminary Matches",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/inventory"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/prelim-match"
+                }
+              }
+            }
           },
           "400": {
             "description": "unexpected error",
@@ -696,6 +734,74 @@
           }
         }
       },
+      "inventory": {
+        "type": "object",
+        "properties": {
+          "StateOrProvince": {
+            "type": "string",
+            "example": "CA"
+          },
+          "PostalCode": {
+            "type": "string",
+            "example": "94507"
+          },
+          "BedroomsTotal": {
+            "type": "integer",
+            "example": 3
+          },
+          "BathroomsFull": {
+            "type": "integer",
+            "example": 2
+          },
+          "LivingArea": {
+            "type": "integer",
+            "example": 2650
+          },
+          "LotSizeSquareFeet": {
+            "type": "integer",
+            "example": 6000
+          },
+          "ParkingTotal": {
+            "type": "integer",
+            "example": 2
+          },
+          "YearBuilt": {
+            "type": "integer",
+            "example": 1990
+          },
+          "ListPrice": {
+            "type": "integer",
+            "example": 250000
+          },
+          "OccupantType": {
+            "type": "string",
+            "example": "Owner"
+          },
+          "PoolPrivateYN": {
+            "type": "boolean",
+            "example": false
+          },
+          "StandardStatus": {
+            "type": "string",
+            "example": "Off-market"
+          }
+        }
+      },
+      "prelim-match": {
+        "type": "object",
+        "properties": {
+          "matchCount": {
+            "type": "integer",
+            "description": "Number of buyers your submission matched",
+            "example": 34
+          },
+          "buyBoxesCount": {
+            "type": "integer",
+            "description": "Number of buy boxes your submission matched",
+            "example": 80
+          }
+        }
+      },
       "offers": {
         "required": [
           "offer_amount"
@@ -728,6 +834,38 @@
             "type": "string",
             "format": "timestamp with time zone",
             "description": "timestamp with time zone"
+          },
+          "buyer_pays_buyer_broker_commission": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "buyer_pays_listing_broker_commission": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "buyer_broker_commission_pct": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "buyer_broker_commission_amt": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "listing_broker_commission_pct": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "listing_broker_commission_amt": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "net_proceeds_to_seller": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "net_cost_to_buyer": {
+            "type": "integer",
+            "format": "bigint"
           },
           "offer_memo": {
             "type": "string",
@@ -896,14 +1034,46 @@
             "type": "integer",
             "format": "bigint"
           },
-          "counter_offer_memo": {
-            "type": "string",
-            "format": "text"
+          "buyer_pays_buyer_broker_commission": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "buyer_pays_listing_broker_commission": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "buyer_broker_commission_pct": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "buyer_broker_commission_amt": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "listing_broker_commission_pct": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "listing_broker_commission_amt": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "net_proceeds_to_seller": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "net_cost_to_buyer": {
+            "type": "integer",
+            "format": "bigint"
           },
           "counter_offer_expires": {
             "type": "string",
             "format": "timestamp with time zone",
             "description": "timestamp with time zone"
+          },
+          "counter_offer_memo": {
+            "type": "string",
+            "format": "text"
           },
           "counter_offer_terms": {
             "type": "object",

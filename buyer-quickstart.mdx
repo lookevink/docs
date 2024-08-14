@@ -1,19 +1,26 @@
 ---
-title: 'Buyer Quickstart'
-description: 'Make cash offers in under 10 minutes'
+title: "Buyer Quickstart"
+description: "Make cash offers in under 10 minutes"
 ---
 
-## Accessing our Opportunities
-During the discovery calls, we should have set up your customized access based on your use case. To view your current opportunities,
+## Accessing your Opportunities
+
+During the discovery calls, we should have set up your customized access based on your use case, buy boxes, and other requirements. To view your current opportunities,
 you can view the list of our active cash offer requests ("offer requests") by getting the `/offer-requests` endpoint:
+
 ```curl
 curl --request GET \
   --url https://v2.easystreetoffers.com/api/v2/offer-requests \
   --header 'Authorization: <api-key>'
 ```
-<Note>You can make this call and view response payload directly in our [playground](/api-reference/endpoint/get-offer-requests)</Note>
+
+<Note>
+  You can make this call and view response payload directly in our
+  [playground](/api-reference/endpoint/get-offer-requests)
+</Note>
 
 You will get something like this:
+
 ```json
 [
     {
@@ -49,11 +56,14 @@ You will get something like this:
   ...
   ]
 ```
-Fields named with Pascal Case convention follow the [RESO 2.0](https://ddwiki.reso.org/display/DDW20/Data+Dictionary+2.0+Wiki) standard. Because we have 100+ fields per property, we've hidden the fields with null as values. 
+
+Fields named with Pascal Case convention follow the [RESO 2.0](https://ddwiki.reso.org/display/DDW20/Data+Dictionary+2.0+Wiki) standard. Because we have 100+ fields per property, we've hidden the fields with null as values.
 To view a list of all possible return fields, please visit our [API Reference](/api-reference/endpoint/get-offer-requests).
 
 ## Making a cash offer
+
 The `offer_request_id` uniquely identifies a cash offer request. To make a cash offer, you can post to the `/offers` endpoint:
+
 ```curl
 curl --request POST \
   --url https://v2.easystreetoffers.com/api/v2/offers \
@@ -77,10 +87,17 @@ curl --request POST \
   "test": true
 }'
 ```
-<Note>Note the `"test":true` field. This offer will be sent to the void and not visible to our agents, so be sure to remove it or set it as false in production</Note>
+
+<Note>
+  Note the `"test":true` field. This offer will be sent to the void and not
+  visible to our agents, so be sure to remove it or set it as false in
+  production
+</Note>
 
 ## Configure a webhook
+
 We will send a POST request to the webhook URL you provide when you receive a decision on your offer. You can create one by posting:
+
 ```curl
 curl --request POST \
   --url https://v2.easystreetoffers.com/api/v2/wh \
@@ -92,22 +109,25 @@ curl --request POST \
 ```
 
 ## Viewing your cash offers
+
 You can view your cash offers by getting the `/offers` endpoint:
+
 ```curl
 curl --request GET \
   --url https://v2.easystreetoffers.com/api/v2/offers \
   --header 'Authorization: <api-key>'
 ```
 
-
 ## Receiving offer updates
+
 ```json
 {
   "offer_request_id": 188,
   "offer_id": 235,
-  "offer_status": "offer_accepted",
+  "offer_status": "offer_accepted"
 }
 ```
+
 View all the possible webhook payload here.
 
 If an agent accepts your offer, our acquistion team will contact you to move this deal forward.

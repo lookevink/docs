@@ -67,7 +67,8 @@
       "pages": [
         "api-reference/endpoint/post-offer-requests",
         "api-reference/endpoint/get-offer-requests",
-        "api-reference/endpoint/get-offer-requests-1"
+        "api-reference/endpoint/get-offer-requests-1",
+        "api-reference/endpoint/prelim-offer-request"
       ]
     },
     {
