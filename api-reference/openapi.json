@@ -837,11 +837,13 @@
           },
           "buyer_pays_buyer_broker_commission": {
             "type": "boolean",
-            "format": "boolean"
+            "format": "boolean",
+            "description": "If true, buyer pays the buyer broker commission equal to 3% of the offer amount. If false, seller will pay the buyer broker commission equal to 3% of the offer amount."
           },
           "buyer_pays_listing_broker_commission": {
             "type": "boolean",
-            "format": "boolean"
+            "format": "boolean",
+            "description": "If true, buyer pays the listing broker commission set by the agent. If false, seller will pay listing agent commission."
           },
           "buyer_broker_commission_pct": {
             "type": "number",
@@ -1036,7 +1038,8 @@
           },
           "buyer_pays_buyer_broker_commission": {
             "type": "boolean",
-            "format": "boolean"
+            "format": "boolean",
+            "description": "If true, buyer pays the buyer broker commission equal to 3% of the offer amount. If false, seller will pay the buyer broker commission equal to 3% of the offer amount."
           },
           "buyer_pays_listing_broker_commission": {
             "type": "boolean",

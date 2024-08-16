@@ -1,10 +1,12 @@
 ---
-title: 'Broker Quickstart'
-description: 'Start bulk request cash offers within a day'
+title: "Broker Quickstart"
+description: "Start bulk request cash offers within a day"
 ---
 
 ## Make your first request for cash offers
+
 To make your first test request for cash offers, you can make a POST request to the `/offer-requests` endpoint in the playground or with cURL:
+
 ```curl
 curl --request POST \
   --url https://v2.easystreetoffers.com/api/v2/offer-requests \
@@ -64,40 +66,54 @@ curl --request POST \
     "AssociationFeeFrequency": "Monthly"
   },
   "media": [
-    "https://picsum.photos/200"
+    "https://picsum.photos/200",
   ]
 }'
 ```
-<Note>Fields named with Pascal Case convention follow the [RESO 2.0](https://ddwiki.reso.org/display/DDW20/Data+Dictionary+2.0+Wiki) standard. Please reference the Wiki before inquiring about field definitions</Note>
+
+<Note>
+  Fields named with Pascal Case convention follow the [RESO
+  2.0](https://ddwiki.reso.org/display/DDW20/Data+Dictionary+2.0+Wiki) standard.
+  Please reference the Wiki before inquiring about field definitions
+</Note>
 
 If successful, you will receive the following response:
+
 ```json
 {
-    "offer_request_id": 738,
-    "requested_by_agent": "8cedea14-84be-4081-9370-c8a782db0480",
-    "inventory_property_id": 844,
-    "offer_requested_at": "2024-06-24T15:30:52.755574+00:00",
-    "offer_requested_decided_by": null,
-    "offer_request_is_mls": null,
-    "offer_request_deal_type": null,
-    "offer_request_asking": 3900000,
-    "offer_request_expires_at": null,
-    "offer_request_is_approved": null,
-    "offer_request_decided_at": null,
-    "offer_request_viewed_at": null,
-    "offer_request_status": "in_review",
-    "offer_request_refreshed_at": null,
-    "test": true,
-    "submitted_by_user": "e83d3b1f-ed37-4e58-90c6-9046049b8e2e"
+  "offer_request_id": 888,
+  "requested_by_agent": "8cedea14-8888-8888-8888-c8a782db0480",
+  "inventory_property_id": 844,
+  "offer_requested_at": "2024-06-24T15:30:52.755574+00:00",
+  "offer_requested_decided_by": null,
+  "offer_request_is_mls": null,
+  "offer_request_deal_type": null,
+  "offer_request_asking": 3900000,
+  "offer_request_expires_at": null,
+  "offer_request_is_approved": null,
+  "offer_request_decided_at": null,
+  "offer_request_viewed_at": null,
+  "offer_request_status": "in_review",
+  "offer_request_refreshed_at": null,
+  "test": true,
+  "submitted_by_user": "e83d3b1f-8888-8888-8888-9046049b8e2e"
 }
 ```
+
 You've just submitted your first Cash Offer Request! You can use the offer_request_id to identify it in your system & view the current status of your request.
 
 ## Receiving notifications
-By default, we send out email notifications to the `ListAgentEmail` for when offer requests are approved to be sent to buyers, and when offers are made on your requests. 
-<Warning>If you leave out the ListAgentEmail or set it as null in your request API call, then the email notifications for the offer request will be sent to the email used to set up the API</Warning>
+
+By default, we send out email notifications to the `ListAgentEmail` for when offer requests are approved to be sent to buyers, and when offers are made on your requests.
+
+<Warning>
+  If you leave out the ListAgentEmail or set it as null in your request API
+  call, then the email notifications for the offer request will be sent to the
+  email used to set up the API
+</Warning>
 
 Additionally, you can set up a webhook to receive notifications on key events related to your offer requests by posting to the `/wh` endpoint:
+
 ```curl
 curl --request POST \
   --url https://v2.easystreetoffers.com/api/v2/wh \
@@ -109,21 +125,27 @@ curl --request POST \
 ```
 
 When an offer request is approved, we'll send a POST request to the webhook URL you provided with the following JSON body:
+
 ```json
 {
-  "offer_request_id": 188,
+  "offer_request_id": 888,
   "offer_request_status": "receiving_offers"
 }
 ```
 
 When an offer is made on your request, we'll send a POST request to the webhook URL you provided with the following JSON body:
+
 ```json
 {
-  "offer_id": 88,
-  "offer_request_id": 144,
-  "offer_amount": 3800000,
-  "created_at": "2024-05-18T00:27:44.993+00:00",
-  "offer_expires": "2024-05-18T00:21:50.714+00:00",
+  "offer_id": 888,
+  "offer_request_id": 888,
+  "created_at": "2024-08-16T14:39:40.868004+00:00",
+  "offer_amount": 500000,
+  "buyer_pays_buyer_broker_commission": false,
+  "buyer_pays_listing_broker_commission": false,
+  "buyer_broker_commission_pct": 3,
+  "listing_broker_commission_pct": 3,
+  "offer_expires": "2024-08-18T14:39:32.806+00:00",
   "offer_memo": "",
   "offer_status": "active",
   "additional_terms": null,
@@ -138,25 +160,145 @@ When an offer is made on your request, we'll send a POST request to the webhook 
   "post_possession_period": 0,
   "offer_is_counter_offer": null,
   "offer_decided_at": null,
-  "test": null
+  "test": null,
+  "viewed": false,
+  "external_id": null,
+  "offer_feedback": null,
+  "offer_request_external_id": null
 }
 ```
 
+In the offer above, the `offer_request_id` is the same as the `offer_request_id` in the response from the `/offer_requests` endpoint.
+If you provided a `offer_request_external_id`, that gets returned as well. You can use that to identify the offer in your system.
+
+Now, let's take a look at the offer itself. The buyer made an offer of `$500,000` on your request.
+Because both `buyer_pays_buyer_broker_commission` and `buyer_pays_listing_broker_commission` are false,
+buyer has indicated that the offer assumes seller pays both buyer and listing broker commissions.
+
+Buyer broker commission goes to ESO, and is locked at `3%`, while listing broker commission is variable. In the above transaction, seller is responsible for `$500,000 * 3% = $15,000` in buyer broker commission, as well as `$500,000 * 3% = $15,000` in listing broker commission.
+
+The seller is expected to net `$470,000` before other closing costs from the transaction.
+
+## Responding to offers
+
+At this point, you can do one of three things with the cash offer:
+
+- Accept it
+- Reject it
+- Counter it
+
+We expect each broker to respond to offers on each property.
+Buyer has signed a binding buyer participation agreement with ESO, and by making the cash offer, has strong intent to close.
+We encourage agents to counter offers if they believe the initial offer falls outside of expected range, instead of rejecting.
+
+We hold both parties of the transaction accountable to being responsive.
+
+### Accepting an offer
+
+You can accept an offer by sending a PATCH request to the `/offers` endpoint with offer_status as `accepted`:
+
+```curl
+curl --location --request PATCH 'https://v2.easystreetoffers.com/api/v2/offers/' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: <key>' \
+--data '{
+    "offer_id": 888,
+    "offer_status": "accepted"
+}'
+```
+
+<Note>
+  Once you accept an offer, our acquisitions team will be notified and reach out
+  to you with next steps.
+</Note>
+<Warning>
+  Once you accept **one** offer, **all** of the other offers and counter offers
+  you made will be **rejected**.
+</Warning>
+
+### Rejecting an offer
+
+You can reject an offer by sending a PATCH request to the `/offers` endpoint with offer_status as `rejected`:
+
+```curl
+curl --location --request PATCH 'https://v2.easystreetoffers.com/api/v2/offers/' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: <key>' \
+--data '{
+    "offer_id": 88,
+    "offer_status": "rejected"
+}'
+```
+
+## Countering offers
+
+If you have an offer that you'd like to counter, you can do so by posting to the `/counter-offers` endpoint:
+
+```curl
+curl --request POST \
+  --url https://v2.easystreetoffers.com/api/v2/counter-offers \
+  --header 'Authorization: <api-key>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "offer_id": 123,
+  "counter_offer_amount": 500000,
+  "buyer_pays_buyer_broker_commission": true,
+  "buyer_pays_listing_broker_commission": true,
+  "listing_broker_commission_pct": 2,
+  "counter_offer_memo": "<string>",
+  "counter_offer_expires": "<string>",
+  "counter_offer_terms": {},
+  "counter_offer_status": "<string>",
+  "counter_earnest_money": 123,
+  "counter_em_hard_post_inspection": true,
+  "counter_lease_back": true,
+  "counter_lease_back_period": 123,
+  "counter_flexible_closing": true,
+  "counter_post_possession": true,
+  "counter_waive_warranty": true,
+  "counter_inspection_period": 123,
+  "counter_post_possession_period": 123,
+  "test": true
+}'
+```
+
+In the counter offer above, you indicate that the seller is willing to accept a counter offer of `$500,000`, if the buyer agrees to paying the commissions.
+You have also adjusted the `listing_broker_commission_pct` to 2.0%, demonstrating your intent as listing broker to surrender 1% of the the offer amount to the buyer.
+
+If the buyer accepts this counter offer, the expected net cost to buyer is `$500,000 * (100% + 3% + 2%) = $525,000` before other closing & reno costs.
+If the buyer accepts this counter offer, a new offer with status of `accepted` will be created, and your endpoint will get the same webhook as normal.
+If the buyer rejects this counter offer, you will get an `UPDATE` call to your callback.
+
+<Warning>
+  If the buyer accepts your counter offer, we will reject **all** other offers
+  made on your offer request. Only use a counter offer if you are prepared for
+  the buyer to accept it.
+</Warning>
 
 ## Viewing all your cash offers
+
 You can view the cash offers on your requests by getting the `/offers` endpoint:
+
 ```curl
 curl --request GET \
   --url https://v2.easystreetoffers.com/api/v2/offers \
   --header 'Authorization: <api-key>'
 ```
+
 Returning
+
 ```json
 [
   {
-    "offer_id": 88,
-    "offer_request_id": 144,
+    "offer_id": 888,
+    "offer_request_id": 188,
     "offer_amount": 3800000,
+    "buyer_pays_buyer_broker_commission": false,
+    "buyer_pays_listing_broker_commission": false,
+    "buyer_broker_commission_pct": 3,
+    "buyer_broker_commission_amt": 15000,
+    "listing_broker_commission_pct": 2,
+    "listing_broker_commission_amt": 10000,
     "created_at": "2024-05-18T00:27:44.993+00:00",
     "offer_expires": "2024-05-18T00:21:50.714+00:00",
     "offer_memo": "",
@@ -179,66 +321,6 @@ Returning
 ]
 ```
 
-## Responding to offers
-If you have an offer that you'd like to respond to, you can do so by sending a PATCH request to the `/offers` endpoint:
-
-### Accepting an offer
-You can accept an offer by sending a PATCH request to the `/offers` endpoint with offer_status as `accepted`:
-```curl
-curl --location --request PATCH 'https://v2.easystreetoffers.com/api/v2/offers/' \
---header 'Content-Type: application/json' \
---header 'Authorization: <key>' \
---data '{
-    "offer_id": 88,
-    "offer_status": "accepted"
-}'
-```
-<Note>Once you accept an offer, our acquisitions team will be notified and reach out to you with next steps.</Note>
-<Warning>Once you accept **one** offer, all of the other offers and counter offers you made will be invalidated.</Warning>
-
-### Rejecting an offer
-You can accept an offer by sending a PATCH request to the `/offers` endpoint with offer_status as `rejected`:
-```curl
-curl --location --request PATCH 'https://v2.easystreetoffers.com/api/v2/offers/' \
---header 'Content-Type: application/json' \
---header 'Authorization: <key>' \
---data '{
-    "offer_id": 88,
-    "offer_status": "rejected"
-}'
-```
-
-
-## Countering offers
-If you have an offer that you'd like to counter, you can do so by posting to the `/counter-offers` endpoint:
-
-```curl
-curl --request POST \
-  --url https://v2.easystreetoffers.com/api/v2/counter-offers \
-  --header 'Authorization: <api-key>' \
-  --header 'Content-Type: application/json' \
-  --data '{
-  "offer_id": 123,
-  "counter_offer_amount": 123,
-  "counter_offer_memo": "<string>",
-  "counter_offer_expires": "<string>",
-  "counter_offer_terms": {},
-  "counter_offer_status": "<string>",
-  "counter_earnest_money": 123,
-  "counter_em_hard_post_inspection": true,
-  "counter_lease_back": true,
-  "counter_lease_back_period": 123,
-  "counter_flexible_closing": true,
-  "counter_post_possession": true,
-  "counter_waive_warranty": true,
-  "counter_inspection_period": 123,
-  "counter_post_possession_period": 123,
-  "test": true
-}'
-```
-
-
-<Warning>If the buyer accepts your counter offer, we will reject **all** other offers made on your offer request. Only use a counter offer if you are prepared for the buyer to accept it.</Warning>
-
 ## Next Steps
+
 That's it! Go to our API playground to explore all the options and features.

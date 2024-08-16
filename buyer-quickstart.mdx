@@ -51,7 +51,10 @@ You will get something like this:
             "ListAgentFullName": "VREI TEST",
             "LotSizeSquareFeet": 5258,
             "inventory_property_id": 250
-        }
+        },
+        "media": [
+            "https://picsum.photos/200"
+        ]
     },
   ...
   ]
@@ -70,23 +73,33 @@ curl --request POST \
   --header 'Authorization: <api-key>' \
   --header 'Content-Type: application/json' \
   --data '{
-  "offer_request_id": 123,
-  "offer_amount": 123,
-  "offer_expires": "<string>",
-  "offer_memo": "<string>",
-  "additional_terms": {},
-  "earnest_money": 123,
-  "em_hard_post_inspection": true,
-  "lease_back": true,
-  "lease_back_period": 123,
-  "flexible_closing": true,
-  "post_possession": true,
-  "waive_warranty": true,
-  "inspection_period": 123,
-  "post_possession_period": 123,
-  "test": true
+    "offer_request_id": 2639,
+    "created_at": "2024-08-1 14:21:01.61138+00",
+    "offer_amount": 500000,
+    "buyer_pays_buyer_broker_commission": false,
+    "buyer_pays_listing_broker_commission": false,
+    "offer_expires": "2024-05-20 14:19:59.057+00",
+    "offer_memo": "I'\''m interested in buying your property",
+    "offer_status": "active",
+    "additional_terms": null,
+    "earnest_money": 40000,
+    "em_hard_post_inspection": true,
+    "lease_back": true,
+    "lease_back_period": 90,
+    "flexible_closing": true,
+    "post_possession": true,
+    "waive_warranty": true,
+    "inspection_period": 10,
+    "post_possession_period": 90,
+    "offer_is_counter_offer": null,
+    "offer_decided_at": null,
+    "test": true
 }'
 ```
+
+In the above offer, you are making a `$500,000` offer on the property with `offer_request_id` 2639.
+Your our specifies that the seller should pay **both** the buyer and listing broker commissions.
+You are willing to pay **$40,000** in earnest money to lock in the deal.
 
 <Note>
   Note the `"test":true` field. This offer will be sent to the void and not
@@ -108,15 +121,8 @@ curl --request POST \
 }'
 ```
 
-## Viewing your cash offers
-
-You can view your cash offers by getting the `/offers` endpoint:
-
-```curl
-curl --request GET \
-  --url https://v2.easystreetoffers.com/api/v2/offers \
-  --header 'Authorization: <api-key>'
-```
+If the listing agent decides on the cash offer, you will receive an `UPDATE` webhook to your callback url.
+Otherwise, if an agent counters your offer, you will receive an `INSERT` webhook with a `counter-offer` payload.
 
 ## Receiving offer updates
 
@@ -131,5 +137,15 @@ curl --request GET \
 View all the possible webhook payload here.
 
 If an agent accepts your offer, our acquistion team will contact you to move this deal forward.
+
+## Viewing your cash offers
+
+You can view your cash offers by getting the `/offers` endpoint:
+
+```curl
+curl --request GET \
+  --url https://v2.easystreetoffers.com/api/v2/offers \
+  --header 'Authorization: <api-key>'
+```
 
 <Note>Ready? Head to our API Reference for full range of functions.</Note>
