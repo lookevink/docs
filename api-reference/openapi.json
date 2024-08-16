@@ -181,12 +181,12 @@
         }
       },
       "patch": {
-        "description": "Updates a single plant based on the ID supplied",
+        "description": "Updates an offer request",
         "parameters": [
           {
             "name": "offer_request_id",
             "in": "path",
-            "description": "ID of offer request to delete",
+            "description": "ID of offer request to update",
             "required": true,
             "schema": {
               "type": "integer",
@@ -194,8 +194,19 @@
             }
           }
         ],
+        "requestBody": {
+          "description": "Preliminary Matches",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/offer_request"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
-          "204": {
+          "201": {
             "description": "deleted",
             "content": {}
           },
