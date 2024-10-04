@@ -937,6 +937,9 @@
             "format": "timestamp with time zone",
             "description": "timestamp with time zone"
           },
+          "offer_internal_memo": {
+            "type": "string"
+          },
           "test": {
             "type": "boolean",
             "format": "boolean",
