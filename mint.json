@@ -53,6 +53,7 @@
         "introduction",
         "buyer-quickstart",
         "broker-quickstart",
+        "messaging-quickstart",
         "development"
       ]
     },

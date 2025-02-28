@@ -1,0 +1,83 @@
+---
+title: "Messaging Quickstart"
+description: "Send messages to the ESO team or buyer/agent"
+---
+
+If you or your team needs to send a message to the ESO team or buyer/agent, you can use the messaging API.
+
+## Sending a message
+
+To send a message, you need to make a POST request to the `/messages` endpoint.
+
+```sh
+curl --location 'https://v2.easystreetoffers.com/api/v2/messages' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: <api-key>' \
+--data '{
+  "offer_request_id": 0,
+  "offer_id": 0,
+  "comm_content": "let us bump this offer up to $380k"
+}'
+```
+
+to which you will receive a response like this:
+
+```json
+{
+    "comm_id":00000,
+    "offer_request_id":0,
+    "offer_id":0,   
+    "comm_at":"2025-02-28T20:53:46.898+00:00",
+    "comm_content":"let us bump this offer up to $380k",
+    "comm_type":"comm:message_via_api",
+    "comm_direction":"p2p",
+    "intiator_user_id":"<your-user-id>",
+    "comm_initiator":null,
+    "comm_receiver":null,
+    "podio_item_id":null,
+    "from_email":null,
+    "to_email":null,
+    "from_number":null,
+    "to_number":null,
+    "raw_payload":null,
+    "comm_viewed_at":null,
+    "comm_viewed_by":null,
+    "recording":null,
+    "template_id":null,
+    "variables":null,
+    "comm_handled":false,
+    "ai_agent":null,
+    "template_alias":null,
+    "transactional":false,
+    "external_comm_id":null,
+    "scheduled_at":null,
+    "handled":true,
+    "error":null,
+    "suppressor":null,
+    "receiver_user_id":null,
+}
+```
+
+## Receiving messages
+
+To check for messages, you need to make a GET request to the `/messages` endpoint with query parameters for the offer request and offer IDs.
+
+```sh
+curl --location 'https://v2.easystreetoffers.com/api/v2/messages?limit=5&offset=0&offer_request_id=0&offer_id=0' \
+--header 'Authorization: <api-key>'
+```
+
+The response will be a list of messages, sample in the POST response above.
+
+## Webhooks
+
+After you configure your webhook, you will receive a webhook event for each message relevant to your offers/requests at your endpoint.
+
+```json
+{
+    "offer_request_id": 0,
+    "offer_id": 0,
+    "comm_id": 0
+}
+```
+
