@@ -7,7 +7,7 @@ description: "Start bulk request cash offers within a day"
 
 To make your first test request for cash offers, you can make a POST request to the `/offer-requests` endpoint in the playground or with cURL:
 
-```curl
+```sh
 curl --request POST \
   --url https://v2.easystreetoffers.com/api/v2/offer-requests \
   --header 'Authorization: <api-key>' \
@@ -106,7 +106,7 @@ You've just submitted your first Cash Offer Request! You can use the offer_reque
 
 Not ready to submit a full request yet? You can also check out how many buyers and buy boxes a property matches by hitting the preliminary request endpoint:
 
-```curl
+```sh
 curl --location 'https://v2.easystreetoffers.com/api/v2/offer-requests/prelim' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: <api-key>' \
@@ -140,7 +140,7 @@ By default, we send out email notifications to the `ListAgentEmail` for when off
 
 Additionally, you can set up a webhook to receive notifications on key events related to your offer requests by posting to the `/wh` endpoint:
 
-```curl
+```sh
 curl --request POST \
   --url https://v2.easystreetoffers.com/api/v2/wh \
   --header 'Authorization: <api-key>' \
@@ -223,7 +223,7 @@ We hold both parties of the transaction accountable to being responsive.
 
 You can accept an offer by sending a PATCH request to the `/offers` endpoint with offer_status as `accepted`:
 
-```curl
+```sh
 curl --location --request PATCH 'https://v2.easystreetoffers.com/api/v2/offers/' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: <key>' \
@@ -246,7 +246,7 @@ curl --location --request PATCH 'https://v2.easystreetoffers.com/api/v2/offers/'
 
 You can reject an offer by sending a PATCH request to the `/offers` endpoint with offer_status as `rejected`:
 
-```curl
+```sh
 curl --location --request PATCH 'https://v2.easystreetoffers.com/api/v2/offers/' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: <key>' \
@@ -260,7 +260,7 @@ curl --location --request PATCH 'https://v2.easystreetoffers.com/api/v2/offers/'
 
 If you have an offer that you'd like to counter, you can do so by posting to the `/counter-offers` endpoint:
 
-```curl
+```sh
 curl --request POST \
   --url https://v2.easystreetoffers.com/api/v2/counter-offers \
   --header 'Authorization: <api-key>' \
@@ -305,7 +305,7 @@ If the buyer rejects this counter offer, you will get an `UPDATE` call to your c
 
 You can view the cash offers on your requests by getting the `/offers` endpoint:
 
-```curl
+```sh
 curl --request GET \
   --url https://v2.easystreetoffers.com/api/v2/offers \
   --header 'Authorization: <api-key>'
@@ -346,6 +346,23 @@ Returning
   ...
 ]
 ```
+
+## Adding pictures after submission
+After submission, you can add pictures to the offer request by sending a PATCH request to the `/offer-requests` endpoint.
+
+```sh
+curl --location --request PATCH 'https://v2.easystreetoffers.com/api/v2/offer-requests/' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: <key>' \
+--data '{ 
+    "offer_request_id": 888,
+    "media": [
+        "https://picsum.photos/200",
+        "https://picsum.photos/200"
+    ]
+}'
+```
+
 
 ## Next Steps
 

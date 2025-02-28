@@ -8,7 +8,7 @@ description: "Make cash offers in under 10 minutes"
 During the discovery calls, we should have set up your customized access based on your use case, buy boxes, and other requirements. To view your current opportunities,
 you can view the list of our active cash offer requests ("offer requests") by getting the `/offer-requests` endpoint:
 
-```curl
+```sh
 curl --request GET \
   --url https://v2.easystreetoffers.com/api/v2/offer-requests \
   --header 'Authorization: <api-key>'
@@ -67,7 +67,7 @@ To view a list of all possible return fields, please visit our [API Reference](/
 
 The `offer_request_id` uniquely identifies a cash offer request. To make a cash offer, you can post to the `/offers` endpoint:
 
-```curl
+```sh
 curl --request POST \
   --url https://v2.easystreetoffers.com/api/v2/offers \
   --header 'Authorization: <api-key>' \
@@ -111,7 +111,7 @@ You are willing to pay **$40,000** in earnest money to lock in the deal.
 
 We will send a POST request to the webhook URL you provide when you receive a decision on your offer. You can create one by posting:
 
-```curl
+```sh
 curl --request POST \
   --url https://v2.easystreetoffers.com/api/v2/wh \
   --header 'Authorization: <api-key>' \
@@ -142,7 +142,7 @@ If an agent accepts your offer, our acquistion team will contact you to move thi
 
 You can view your cash offers by getting the `/offers` endpoint:
 
-```curl
+```sh
 curl --request GET \
   --url https://v2.easystreetoffers.com/api/v2/offers \
   --header 'Authorization: <api-key>'
