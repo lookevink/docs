@@ -2,3 +2,17 @@
 title: List Offers
 openapi: get /offers
 ---
+
+| Status | Description |
+|--------|-------------|
+| active | The offer is currently valid and awaiting response |
+| accepted | The offer has been accepted by the recipient |
+| withdrawn | The offer has been retracted by the party who made it |
+| rejected | The offer has been explicitly declined by the recipient |
+| countered | A counter-offer has been made in response to this offer |
+| another_offer_accepted | This offer was declined because a different offer was accepted |
+| countering | The recipient is in the process of creating a counter-offer |
+| pending | The offer has been submitted but not yet processed or reviewed |
+| scheduled | The offer has been scheduled for future review or processing |
+| accepted_another_offer | The party who made this offer has accepted a different offer |
+| expired | The offer has passed its validity period and is no longer active |
