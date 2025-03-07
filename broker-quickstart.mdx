@@ -154,6 +154,7 @@ When an offer request is approved, we'll send a POST request to the webhook URL 
 
 ```json
 {
+  "event": "offer_request_approved",
   "offer_request_id": 888,
   "offer_request_status": "receiving_offers"
 }
@@ -163,6 +164,7 @@ When an offer is made on your request, we'll send a POST request to the webhook 
 
 ```json
 {
+  "event": "new_offer",
   "offer_id": 888,
   "offer_request_id": 888,
   "created_at": "2024-08-16T14:39:40.868004+00:00",
