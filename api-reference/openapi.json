@@ -19,6 +19,114 @@
     }
   ],
   "paths": {
+    "/buyer/lead": {
+      "post": {
+        "summary": "Submit a buyer lead",
+        "description": "Submit a new buyer lead for ESO partner..",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                  "required": [
+                    "first_name",
+                    "last_name",
+                    "primary_email",
+                    "primary_phone",
+                    "property_address"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "first_name": {
+                      "type": "string",
+                      "format": "string"
+                    },
+                    "last_name": {
+                      "type": "string",
+                      "format": "string"
+                    },
+                    "primary_email": {
+                      "type": "string",
+                      "format": "string"
+                    },
+                    "primary_phone": {
+                      "maxLength": 16,
+                      "type": "string",
+                      "format": "character varying"
+                    },
+                    "property_address": {
+                      "type": "object",
+                      "required": [
+                        "inventory_property_id",
+                        "offer_request_id"
+                      ],
+                      "properties": {
+                        "inventory_property_id": { "type": "integer" },
+                        "offer_request_id": { "type": "integer" }
+                      }
+                    }
+                   
+                  }
+                },
+              "example": {
+                "first_name": "My lead",
+                "last_name": "Test",
+                "primary_email": "lead@yourdomain.com",
+                "primary_phone": "+1111111",
+                "property_address": {
+                  "offer_request_id": 56641,
+                  "inventory_property_id": 116775
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Lead created successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "created_at": "2025-08-12T17:12:20.542288+00:00",
+                  "lead_id": "6e22e8e3-0533-xxxx-xxxx-xxxxxxxxxx",
+                  "first_name": "My lead",
+                  "last_name": "Test",
+                  "primary_email": "lead@yourdomain.com",
+                  "primary_phone": "+1111111",
+                  "api_partner_user_id": "e83d3b1f-ed37-xxxx-xxxx-xxxxxxxxxxx",
+                  "inventory_property_id": 116775,
+                  "offer_request_id": 56641
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "created_at": { "type": "string", "format": "date-time" },
+                    "lead_id": { "type": "string" },
+                    "first_name": { "type": "string" },
+                    "last_name": { "type": "string" },
+                    "primary_email": { "type": "string" },
+                    "primary_phone": { "type": "string" },
+                    "api_partner_user_id": { "type": "string" },
+                    "inventory_property_id": { "type": "integer" },
+                    "offer_request_id": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/offer-requests": {
       "post": {
         "description": "Creates an offer request. ",

@@ -149,4 +149,24 @@ curl --request GET \
   --header 'Authorization: <api-key>'
 ```
 
+## Buyer Lead Submit 
+
+To create a lead from buyer platform, send a POST request to the `/api/v2/buyer/lead` endpoint with the following information: first name, last name, email, phone number, property address (including `offer_request_id` and `inventory_property_id`). The `offer_request_id` and `inventory_property_id` can be obtained from the `/api/v2/offer-requests` API.
+```sh
+curl --request POST \
+  --url https://v2.easystreetoffers.com/api/v2/buyer/lead \
+  --header 'Authorization: <api-key>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+      "first_name": "My lead",
+      "last_name": "My",
+      "primary_email": "lead@yourdomain.com",
+      "primary_phone": "+1111111",
+      "property_address": {
+        "offer_request_id": 56641,
+        "inventory_property_id": 116775
+      }
+}'
+```
+
 <Note>Ready? Head to our API Reference for full range of functions.</Note>

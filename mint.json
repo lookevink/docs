@@ -83,6 +83,12 @@
       ]
     },
     {
+      "group": "Buyer Leads",
+      "pages": [
+        "api-reference/endpoint/post-buyer-leads"
+      ]
+    },
+    {
       "group": "Counter Offers",
       "pages": [
         "api-reference/endpoint/post-counter-offers",
