@@ -127,6 +127,37 @@
         }
       }
     },
+    "/deal-offer-requests": {
+      "get": {
+        "description": "Returns all deal offer requests from the system. These deals might not belong to the calling user",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Offer request response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/offer_request"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/offer-requests": {
       "post": {
         "description": "Creates an offer request. ",

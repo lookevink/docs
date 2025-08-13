@@ -68,6 +68,7 @@
       "pages": [
         "api-reference/endpoint/post-offer-requests",
         "api-reference/endpoint/get-offer-requests",
+        "api-reference/endpoint/get-deal-offer-requests",
         "api-reference/endpoint/get-offer-requests-1",
         "api-reference/endpoint/prelim-offer-request",
         "api-reference/endpoint/patch-offer-request"
