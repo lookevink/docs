@@ -1071,6 +1071,10 @@
             "type": "boolean",
             "format": "boolean"
           },
+          "offer_type": {
+            "type": "string",
+            "description": "The category of offer. Options include: 'quality_cash', 'auto_cash', 'cash', 'mls', 'ibuyer', 'custom', 'instant', and 'instant_premier'."
+          },
           "offer_decided_at": {
             "type": "string",
             "format": "timestamp with time zone",
