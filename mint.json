@@ -77,6 +77,7 @@
     {
       "group": "Offers",
       "pages": [
+        "api-reference/endpoint/post-instant-offer",
         "api-reference/endpoint/post-offers",
         "api-reference/endpoint/get-offers",
         "api-reference/endpoint/get-offers-1",

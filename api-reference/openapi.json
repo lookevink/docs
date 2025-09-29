@@ -400,6 +400,49 @@
         }
       }
     },
+    "/sizzle/instant-address": {
+      "servers": [
+        {
+          "url": "https://v2.easystreetoffers.com/api"
+        }
+      ],
+      "post": {
+        "description": "Generate an initial instant preview/premier offer",
+        "requestBody": {
+          "description": "get data for initial instant offer based on an address",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/instant_address"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Offers response",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/instant_offers"
+                  }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/offers": {
       "post": {
         "description": "Make an offer on a property. ",
@@ -792,6 +835,31 @@
           }
         }
       },
+      "instant_address": {
+        "type": "object",
+        "properties": {
+          "request":  {
+            "type": "object",
+            "properties": {
+              "offer_request_asking": {
+                "type": "integer",
+                "format": "bigint"
+              }
+            }
+          },
+          "inventory": {
+            "description": "property fields named with Pascal Case convention follow the RESO 2.0 standard",
+              "type": "object",
+              "properties": {
+                "UnparsedAddress": {
+                  "type": "string",
+                  "description": "a full address to get instant offer",
+                  "default": "4417 Powells Point Rd, Virginia Beach, VA 23455"
+                }
+              }
+          }
+        }
+      },
       "offer_requests": {
         "type": "object",
         "properties": {
@@ -952,6 +1020,166 @@
           }
         }
       },
+      "instant_offers": {
+        "required": [
+          "offer_amount"
+        ],
+        "type": "object",
+        "properties": {
+          "offer_amount": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "additional_terms": {
+            "type": "object",
+            "properties": {
+              "premier": {
+                "type": "boolean",
+                "format": "boolean"
+              },
+              "fmv": {
+                "type": "integer",
+                "format": "bigint"
+              },              
+              "ltr_arv": {
+                "type": "integer",
+                "format": "bigint"
+              },              
+              "moa": {
+                "type": "integer",
+                "format": "bigint"
+              },
+              "source": {
+                "type": "string",
+                "format": "text",
+                "example":"abodemine-v3"
+              }
+            }
+          },
+          "buyer_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "offer_request_id": {
+            "type": "integer",
+            "format": "bigint",
+            "example": null
+          },
+          "created_at": {
+            "type": "string",
+            "format": "timestamp with time zone",
+            "description": "timestamp with time zone",
+            "default": "now()"
+          },
+          "offer_expires": {
+            "type": "string",
+            "format": "timestamp with time zone",
+            "description": "timestamp with time zone"
+          },
+          "buyer_pays_buyer_broker_commission": {
+            "type": "boolean",
+            "format": "boolean",
+            "description": "If true, buyer pays the buyer broker commission equal to 3% of the offer amount. If false, seller will pay the buyer broker commission equal to 3% of the offer amount."
+          },
+          "buyer_pays_listing_broker_commission": {
+            "type": "boolean",
+            "format": "boolean",
+            "description": "If true, buyer pays the listing broker commission set by the agent. If false, seller will pay listing agent commission."
+          },
+          "buyer_broker_commission_pct": {
+            "type": "number",
+            "format": "numeric",
+            "example": 0
+          },
+          "buyer_broker_commission_amt": {
+            "type": "integer",
+            "format": "bigint",
+            "example": 0
+          },
+          "listing_broker_commission_pct": {
+            "type": "number",
+            "format": "numeric"
+          },
+          "listing_broker_commission_amt": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "net_proceeds_to_seller": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "net_cost_to_buyer": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "offer_memo": {
+            "type": "string",
+            "format": "text"
+          },
+          "offer_status": {
+            "type": "string",
+            "format": "text"
+          },
+          "earnest_money": {
+            "type": "integer",
+            "format": "integer"
+          },
+          "em_hard_post_inspection": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "lease_back": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "lease_back_period": {
+            "type": "integer",
+            "format": "integer"
+          },
+          "flexible_closing": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "post_possession": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "waive_warranty": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "inspection_period": {
+            "type": "integer",
+            "format": "integer"
+          },
+          "post_possession_period": {
+            "type": "integer",
+            "format": "integer"
+          },
+          "offer_is_counter_offer": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "offer_type": {
+            "type": "string",
+            "example": "instant_premier_address"
+          },
+          "offer_decided_at": {
+            "type": "string",
+            "format": "timestamp with time zone",
+            "description": "timestamp with time zone",
+            "example": null
+          },
+          "offer_internal_memo": {
+            "type": "string"
+          },
+          "test": {
+            "type": "boolean",
+            "format": "boolean",
+            "description": "set to true"
+          }
+        }
+      },
       "offers": {
         "required": [
           "offer_amount"
@@ -1025,7 +1253,8 @@
           },
           "offer_status": {
             "type": "string",
-            "format": "text"
+            "format": "text",
+            "example":"true"
           },
           "additional_terms": {
             "type": "object",
