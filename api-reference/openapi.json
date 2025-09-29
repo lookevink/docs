@@ -872,15 +872,17 @@
             "type": "string",
             "format": "string",
             "enum": [
-              "receiving_offers",
-              "in_review",
+              "in_submission",
+              "initial_offer",
+              "active",
               "expired",
               "denied",
-              "no_offers",
-              "in_submission",
-              "pending_approval"
+              "under_contract",
+              "closed",
+              "processing"
             ],
-            "description": "Offer request statuses:\n * `receiving_offers` - Offer Request is active and receiving cash offers.\n * `in_review` - Offer request is pending review by our analysts, and are not yet sent to buyers. \n * `expired` - Offer request has expired and is ready to be renewed. \n * `denied` - Offer request does not meet our criteria, and has been denied. \n * `no_offers` - Offer request has not received any offers, and is ready to be refreshed. \n * `in_submission` - Offer request is incomplete. \n * `pending_approval` - Offer request has been reviewed, and is pending final approval process."
+            "example": "active",
+            "description": "Offer request statuses:\n * `in_submission` - Offer request is incomplete.\n * `initial_offer` - Offer request has complete property details, and has received an instant preview offer, but not yet submitted to the marketplace.\n * `active` - Offer request is active in the marketplace and receiving cash offers.\n * `expired` - Offer request has expired and is ready to be renewed.\n * `denied` - Offer request does not meet our criteria, and has been denied.\n * `under_contract` - Offer request is currently under contract with a buyer.\n * `closed` - Offer request has successfully closed after previously being under_contract.\n * `processing` - Offer request is currently retrieving property data or buyer filtering is occurring."
           },
           "offer_requested_at": {
             "type": "string",
