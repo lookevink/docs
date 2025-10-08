@@ -251,7 +251,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/offer_request"
+                "$ref": "#/components/schemas/offer_request_address"
               },
               "example": {
                 "request": {
@@ -259,51 +259,10 @@
                   "test": true
                 },
                 "property": {
-                  "StreetNumber": "123",
-                  "StreetName": "Easy St",
-                  "City": "Easy",
-                  "StateOrProvince": "CA",
-                  "PostalCode": "12345",
-                  "UnitNumber": "1",
-                  "Stories": 1,
-                  "BedroomsTotal": 3,
-                  "BathroomsFull": 3,
-                  "BathroomsHalf": 0,
-                  "YearBuilt": 1951,
-                  "Longitude": -121.999418,
-                  "Latitude": 37.8450264,
-                  "LivingArea": 2400,
-                  "ListPrice": 2654000,
-                  "MlsStatus": "Off-market",
-                  "Notes": "",
-                  "Sewer": [
-                    "Public Sewer"
-                  ],
-                  "SpaYN": false,
-                  "GarageYN": true,
-                  "CarportYN": false,
-                  "BasementYN": false,
-                  "WaterSource": [
-                    "Public"
-                  ],
-                  "GarageSpaces": 1,
-                  "OccupantType": "Owner",
-                  "OtherParking": "Attached",
-                  "AssociationYN": true,
-                  "OpenParkingYN": false,
-                  "PoolPrivateYN": false,
-                  "AssociationFee": 0,
-                  "StandardStatus": "Off Market",
-                  "LivingAreaUnits": "Square Feet",
-                  "PropertySubType": "Single Family Residence",
-                  "AttachedGarageYN": false,
-                  "LotSizeSquareFeet": 21000,
-                  "SeniorCommunityYN": false,
-                  "PowerProductionType": "",
-                  "ConstructionMaterials": [
-                    "Wood Framing"
-                  ],
-                  "AssociationFeeFrequency": "Monthly"
+                  "UnparsedAddress": "123 Easy St, Easy, CA 12345",
+                  "ListAgentEmail": "Agent@gmail.com",
+                  "ListAgentFirstName": "First Name",
+                  "ListAgentLastName": "Last Name"
                 },
                 "media": [
                   "https://picsum.photos/200"
@@ -930,6 +889,32 @@
           "property": {
             "description": "property fields named with Pascal Case convention follow the RESO 2.0 standard",
             "$ref": "#/components/schemas/inventory_properties_request"
+          },
+          "assumptions": {
+            "description": "Analyst assumptions. Only available to buyers",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/analyst_assumptions"
+            }
+          },
+          "media": {
+            "description": "List of signed URLs. Note that the URLs will become invalid after 10 minutes.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "offer_request_address": {
+        "type": "object",
+        "properties": {
+          "request": {
+            "$ref": "#/components/schemas/offer_requests_request"
+          },
+          "property": {
+            "description": "property fields named with Pascal Case convention follow the RESO 2.0 standard",
+            "$ref": "#/components/schemas/inventory_properties_request_address"
           },
           "assumptions": {
             "description": "Analyst assumptions. Only available to buyers",
@@ -2613,6 +2598,32 @@
             "type": "boolean",
             "format": "boolean",
             "description": "set to true s"
+          }
+        }
+      },
+      "inventory_properties_request_address": {
+        "type": "object",
+        "required": [
+          "UnparsedAddress"
+        ],
+        "properties": {
+          "UnparsedAddress": {
+            "maxLength": 255,
+            "type": "string",
+            "format": "character varying"
+          },
+          "ListAgentEmail": {
+            "maxLength": 80,
+            "type": "string",
+            "format": "character varying"
+          },
+          "ListAgentFirstName": {
+            "type": "string",
+            "format": "text"
+          },
+          "ListAgentLastName": {
+            "type": "string",
+            "format": "text"
           }
         }
       },
