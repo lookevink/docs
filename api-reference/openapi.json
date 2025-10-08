@@ -471,6 +471,108 @@
         }
       }
     },
+    "/push-to-marketplace": {
+      "post": {
+        "description": "Push to Marketplace",
+        "requestBody": {
+          "description": "New offer request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/push_to_marketplace"
+              },
+              "example": {
+                "request": {
+                  "inventory_property_id": 3900000,
+                  "expiration_date": null
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Property posted to marketplace successfully. Processing opportunities in background.",
+                  "inventory_property_id": 12345
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Returns all the current offer-requests from the system that the user has access to",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return, default is 10",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "The offset of the results to return, default is 0",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "The sort order of the results, default is offer_requested_at.desc",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Offer request response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/offer_request"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/sizzle/instant-address": {
       "servers": [
         {
@@ -2624,6 +2726,22 @@
           "ListAgentLastName": {
             "type": "string",
             "format": "text"
+          }
+        }
+      },
+      "push_to_marketplace": {
+        "type": "object",
+        "required": [
+          "inventory_property_id"
+        ],
+        "properties": {
+          "inventory_property_id": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "expiration_date": {
+            "type": "string",
+            "format": "date"
           }
         }
       },

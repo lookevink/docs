@@ -72,7 +72,8 @@
         "api-reference/endpoint/get-active-offer-requests",
         "api-reference/endpoint/get-offer-requests-1",
         "api-reference/endpoint/prelim-offer-request",
-        "api-reference/endpoint/patch-offer-request"
+        "api-reference/endpoint/patch-offer-request",
+        "api-reference/endpoint/push-to-marketplace"
       ]
     },
     {
