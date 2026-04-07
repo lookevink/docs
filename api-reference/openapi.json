@@ -258,7 +258,9 @@
                   "UnparsedAddress": "123 Easy St, Easy, CA 12345",
                   "ListAgentEmail": "Agent@gmail.com",
                   "ListAgentFirstName": "First Name",
-                  "ListAgentLastName": "Last Name"
+                  "ListAgentLastName": "Last Name",
+                  "ListAgentDirectPhone": "+15551234567",
+                  "PropertyCondition": "Needs Minor Aesthetic Repairs"
                 },
                 "media": ["https://picsum.photos/200"]
               }
@@ -2691,6 +2693,19 @@
             "type": "string",
             "format": "text"
           },
+          "PropertyCondition": {
+            "type": "string",
+            "nullable": true,
+            "description": "The condition of the property",
+            "enum": [
+              "Move-in Ready",
+              "Needs Minor Aesthetic Repairs",
+              "Needs Above Normal Repairs",
+              "Needs Major Repairs",
+              "Full Remodel"
+            ],
+            "example": "Needs Minor Aesthetic Repairs"
+          },
           "test": {
             "type": "boolean",
             "format": "boolean",
@@ -2719,6 +2734,24 @@
           "ListAgentLastName": {
             "type": "string",
             "format": "text"
+          },
+          "ListAgentDirectPhone": {
+            "maxLength": 16,
+            "type": "string",
+            "format": "character varying"
+          },
+          "PropertyCondition": {
+            "type": "string",
+            "nullable": true,
+            "description": "The condition of the property",
+            "enum": [
+              "Move-in Ready",
+              "Needs Minor Aesthetic Repairs",
+              "Needs Above Normal Repairs",
+              "Needs Major Repairs",
+              "Full Remodel"
+            ],
+            "example": "Needs Minor Aesthetic Repairs"
           }
         }
       },

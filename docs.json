@@ -1,0 +1,129 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Easy Street Offers",
+  "colors": {
+    "primary": "#2E85B7",
+    "light": "#D0ECF2",
+    "dark": "#E77332"
+  },
+  "favicon": "/eso-favicon.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "buyer-quickstart",
+              "broker-quickstart",
+              "messaging-quickstart",
+              "development"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "API Documentation",
+            "pages": [
+              "api-reference/introduction"
+            ]
+          },
+          {
+            "group": "Cash Offer Requests",
+            "pages": [
+              "api-reference/endpoint/post-offer-requests",
+              "api-reference/endpoint/get-offer-requests",
+              "api-reference/endpoint/get-deal-offer-requests",
+              "api-reference/endpoint/get-active-offer-requests",
+              "api-reference/endpoint/get-offer-requests-1",
+              "api-reference/endpoint/prelim-offer-request",
+              "api-reference/endpoint/patch-offer-request",
+              "api-reference/endpoint/push-to-marketplace"
+            ]
+          },
+          {
+            "group": "Offers",
+            "pages": [
+              "api-reference/endpoint/post-instant-offer",
+              "api-reference/endpoint/post-offers",
+              "api-reference/endpoint/get-offers",
+              "api-reference/endpoint/get-offers-1",
+              "api-reference/endpoint/patch-offers"
+            ]
+          },
+          {
+            "group": "Buyer Leads",
+            "pages": [
+              "api-reference/endpoint/post-buyer-leads"
+            ]
+          },
+          {
+            "group": "Counter Offers",
+            "pages": [
+              "api-reference/endpoint/post-counter-offers",
+              "api-reference/endpoint/get-counter-offers",
+              "api-reference/endpoint/get-counter-offers-1",
+              "api-reference/endpoint/patch-counter-offers"
+            ]
+          },
+          {
+            "group": "Webhooks",
+            "pages": [
+              "api-reference/endpoint/post-wh",
+              "api-reference/endpoint/patch-wh"
+            ]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Developers",
+          "href": "https://discord.gg/PWDTzE8p",
+          "icon": "discord"
+        },
+        {
+          "anchor": "Community",
+          "href": "https://www.facebook.com/groups/esocommunity/",
+          "icon": "facebook"
+        }
+      ]
+    }
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "api": {
+    "openapi": [
+      "api-reference/openapi.json"
+    ]
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "mailto:kevin@easystreetoffers.com"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://v2.easystreetoffers.com/auth/login"
+    }
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/kevinlooESO",
+      "facebook": "https://www.facebook.com/groups/esocommunity/",
+      "linkedin": "https://www.linkedin.com/company/easystreetoffers/"
+    }
+  }
+}
