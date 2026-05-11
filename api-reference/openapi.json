@@ -260,7 +260,41 @@
                   "ListAgentFirstName": "First Name",
                   "ListAgentLastName": "Last Name",
                   "ListAgentDirectPhone": "+15551234567",
-                  "PropertyCondition": "Needs Minor Aesthetic Repairs"
+                  "PropertyCondition": "Needs Minor Aesthetic Repairs",
+                  "MlsStatus": "Off-market",
+                  "PropertySubType": "Single Family Residence",
+                  "ConstructionMaterials": ["Brick", "Wood Siding"],
+                  "BedroomsTotal": 4,
+                  "BathroomsFull": 2,
+                  "BathroomsHalf": 1,
+                  "LivingArea": 1890,
+                  "LotSizeSquareFeet": 7400,
+                  "YearBuilt": 1987,
+                  "GarageYN": true,
+                  "GarageSpaces": 2,
+                  "CarportYN": false,
+                  "CarportSpaces": 1,
+                  "OpenParkingYN": true,
+                  "OpenParkingSpaces": 2,
+                  "AssociationYN": true,
+                  "AssociationFee": 55,
+                  "AssociationFeeFrequency": "Monthly",
+                  "SeniorCommunityYN": false,
+                  "PoolPrivateYN": false,
+                  "SpaYN": false,
+                  "WaterSource": ["Public"],
+                  "Sewer": ["Public Sewer"],
+                  "MortgagePayoff": 112500,
+                  "OccupantType": "Owner",
+                  "TotalActualRent": 2400,
+                  "LeaseExpiration": "2026-12-31",
+                  "OccupancyAtClosing": "Vacant",
+                  "roof_age": 9,
+                  "waterheater_age": 6,
+                  "hvac_age": 7,
+                  "rehab_type": "Light Rehab",
+                  "Notes": "This is a note about the property.",
+                  "EstimatedRenovation": 18000
                 },
                 "media": ["https://picsum.photos/200"]
               }
@@ -2338,7 +2372,14 @@
             "maxLength": 50,
             "type": "string",
             "format": "character varying",
-            "enum": ["On-market", "Off-market"]
+            "enum": [
+              "Active",
+              "Off-market",
+              "Wholesale",
+              "New Construction",
+              "MLS Listed",
+              "seller_considering"
+            ]
           },
           "BedroomsTotal": {
             "type": "number",
@@ -2402,7 +2443,20 @@
           "AssociationFeeFrequency": {
             "maxLength": 25,
             "type": "string",
-            "format": "character varying"
+            "format": "character varying",
+            "enum": [
+              "Annually",
+              "Bi-Monthly",
+              "Bi-Weekly",
+              "Daily",
+              "Monthly",
+              "One Time",
+              "Quarterly",
+              "Seasonal",
+              "Semi-Annually",
+              "Semi-Monthly",
+              "Weekly"
+            ]
           },
           "AssociationYN": {
             "type": "boolean",
@@ -2518,7 +2572,8 @@
           "OccupantType": {
             "maxLength": 50,
             "type": "string",
-            "format": "character varying"
+            "format": "character varying",
+            "enum": ["Owner", "Tenant", "Vacant"]
           },
           "OpenParkingSpaces": {
             "type": "number",
@@ -2554,7 +2609,19 @@
           "PropertySubType": {
             "maxLength": 50,
             "type": "string",
-            "format": "character varying"
+            "format": "character varying",
+            "enum": [
+              "Single Family Residence",
+              "Apartment",
+              "Condominium",
+              "Cabin",
+              "Manufactured Home",
+              "Mobile Home",
+              "Duplex",
+              "Triplex",
+              "Quadruplex",
+              "Townhouse"
+            ]
           },
           "PropertyType": {
             "maxLength": 50,
@@ -2568,7 +2635,24 @@
           "Sewer": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "Aerobic Septic",
+                "Cesspool",
+                "Engineered Septic",
+                "Holding Tank",
+                "Mound Septic",
+                "None",
+                "Other",
+                "Perc Test On File",
+                "Perc Test Required",
+                "Private Sewer",
+                "Public Sewer",
+                "Septic Needed",
+                "Septic Tank",
+                "Shared Septic",
+                "Unknown"
+              ]
             }
           },
           "SpaYN": {
@@ -2635,13 +2719,35 @@
           "WaterSource": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "Cistern",
+                "None",
+                "Other",
+                "Private",
+                "Public",
+                "Shared Well",
+                "Spring",
+                "Well"
+              ]
             }
           },
           "ConstructionMaterials": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "Brick",
+                "Wood Siding",
+                "Wood Framing",
+                "Concrete",
+                "Stucco",
+                "Vinyl Siding",
+                "Stone",
+                "Frame",
+                "Other",
+                "Unknown"
+              ]
             }
           },
           "PowerProductionType": {
@@ -2752,6 +2858,226 @@
               "Full Remodel"
             ],
             "example": "Needs Minor Aesthetic Repairs"
+          },
+          "MlsStatus": {
+            "type": "string",
+            "enum": [
+              "Active",
+              "Off-market",
+              "Wholesale",
+              "New Construction",
+              "MLS Listed",
+              "seller_considering"
+            ],
+            "example": "Off-market"
+          },
+          "PropertySubType": {
+            "type": "string",
+            "enum": [
+              "Single Family Residence",
+              "Apartment",
+              "Condominium",
+              "Cabin",
+              "Manufactured Home",
+              "Mobile Home",
+              "Duplex",
+              "Triplex",
+              "Quadruplex",
+              "Townhouse"
+            ],
+            "example": "Single Family Residence"
+          },
+          "ConstructionMaterials": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "Brick",
+                "Wood Siding",
+                "Wood Framing",
+                "Concrete",
+                "Stucco",
+                "Vinyl Siding",
+                "Stone",
+                "Frame",
+                "Other",
+                "Unknown"
+              ]
+            },
+            "example": ["Brick", "Wood Siding"]
+          },
+          "BedroomsTotal": {
+            "type": "integer",
+            "example": 4
+          },
+          "BathroomsFull": {
+            "type": "integer",
+            "example": 2
+          },
+          "BathroomsHalf": {
+            "type": "integer",
+            "example": 1
+          },
+          "LivingArea": {
+            "type": "integer",
+            "example": 1890
+          },
+          "LotSizeSquareFeet": {
+            "type": "integer",
+            "example": 7400
+          },
+          "YearBuilt": {
+            "type": "integer",
+            "example": 1987
+          },
+          "GarageYN": {
+            "type": "boolean",
+            "example": true
+          },
+          "GarageSpaces": {
+            "type": "integer",
+            "example": 2
+          },
+          "CarportYN": {
+            "type": "boolean",
+            "example": false
+          },
+          "CarportSpaces": {
+            "type": "integer",
+            "example": 1
+          },
+          "OpenParkingYN": {
+            "type": "boolean",
+            "example": true
+          },
+          "OpenParkingSpaces": {
+            "type": "integer",
+            "example": 2
+          },
+          "AssociationYN": {
+            "type": "boolean",
+            "example": true
+          },
+          "AssociationFee": {
+            "type": "integer",
+            "example": 55
+          },
+          "AssociationFeeFrequency": {
+            "type": "string",
+            "enum": [
+              "Annually",
+              "Bi-Monthly",
+              "Bi-Weekly",
+              "Daily",
+              "Monthly",
+              "One Time",
+              "Quarterly",
+              "Seasonal",
+              "Semi-Annually",
+              "Semi-Monthly",
+              "Weekly"
+            ],
+            "example": "Monthly"
+          },
+          "SeniorCommunityYN": {
+            "type": "boolean",
+            "example": false
+          },
+          "PoolPrivateYN": {
+            "type": "boolean",
+            "example": false
+          },
+          "SpaYN": {
+            "type": "boolean",
+            "example": false
+          },
+          "WaterSource": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "Cistern",
+                "None",
+                "Other",
+                "Private",
+                "Public",
+                "Shared Well",
+                "Spring",
+                "Well"
+              ]
+            },
+            "example": ["Public"]
+          },
+          "Sewer": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "Aerobic Septic",
+                "Cesspool",
+                "Engineered Septic",
+                "Holding Tank",
+                "Mound Septic",
+                "None",
+                "Other",
+                "Perc Test On File",
+                "Perc Test Required",
+                "Private Sewer",
+                "Public Sewer",
+                "Septic Needed",
+                "Septic Tank",
+                "Shared Septic",
+                "Unknown"
+              ]
+            },
+            "example": ["Public Sewer"]
+          },
+          "MortgagePayoff": {
+            "type": "integer",
+            "example": 112500
+          },
+          "OccupantType": {
+            "type": "string",
+            "enum": ["Owner", "Tenant", "Vacant"],
+            "example": "Owner"
+          },
+          "TotalActualRent": {
+            "type": "integer",
+            "example": 2400
+          },
+          "LeaseExpiration": {
+            "type": "string",
+            "format": "date",
+            "example": "2026-12-31"
+          },
+          "OccupancyAtClosing": {
+            "type": "string",
+            "enum": ["Vacant", "Tenant", "NeedsLeaseback"],
+            "example": "Vacant"
+          },
+          "roof_age": {
+            "type": "integer",
+            "example": 9
+          },
+          "waterheater_age": {
+            "type": "integer",
+            "example": 6
+          },
+          "hvac_age": {
+            "type": "integer",
+            "example": 7
+          },
+          "rehab_type": {
+            "type": "string",
+            "example": "Light Rehab"
+          },
+          "Notes": {
+            "type": "string",
+            "example": "This is a note about the property."
+          },
+          "EstimatedRenovation": {
+            "type": "integer",
+            "example": 18000
           }
         }
       },
